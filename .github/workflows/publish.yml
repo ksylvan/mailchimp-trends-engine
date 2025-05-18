@@ -1,0 +1,65 @@
+# .github/workflows/publish.yml
+name: Build and Publish
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+env:
+  ENABLE_PUBLISHING: false # Set to true to enable publishing
+  # TEST_PYPI_API_TOKEN: ${{ secrets.TEST_PYPI_API_TOKEN }} #
+  # PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }} # Set your PyPI API token in GitHub secrets
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    permissions:
+      # Keep id-token write permission if you plan to use OIDC/trusted publishing later.
+      # Remove if only API tokens will be used.
+      id-token: write
+
+    steps:
+      - name: "Dummy job here for now"
+        run: echo "This is a placeholder for the actual build and publish steps."
+      # - uses: actions/checkout@v4
+      # - name: Set up Python
+      #   uses: actions/setup-python@v5
+      #   with:
+      #     python-version: "3.12" # Use a specific version for consistency
+      # - name: Set up uv
+      #   uses: astral-sh/setup-uv@v6
+      #   with:
+      #     version: latest # Ensure a version with 'uv build' is installed
+      # - name: Install dependencies
+      #   run: make bootstrap
+      # - name: Run tests
+      #   run: make test
+      # - name: Build package
+      #   run: make build
+
+      # # Publish to TestPyPI for 'develop' branch
+      # - name: Publish package to TestPyPI
+      #   if: github.ref == 'refs/heads/develop'
+      #   run: >
+      #     if [ "${ENABLE_PUBLISHING}" = "true" ]; then
+      #       echo "Publishing to TestPyPI..."
+      #       uv publish --index testpypi \
+      #         -u __token__ -p "${TEST_PYPI_API_TOKEN}" dist/*
+      #     else
+      #       echo "Publishing is disabled. Set ENABLE_PUBLISHING to true to enable."
+      #       exit 0
+      #     fi
+
+      # # Publish to PyPI for 'main' branch
+      # - name: Publish package to PyPI
+      #   if: github.ref == 'refs/heads/main'
+      #   run: >
+      #     if [ "${ENABLE_PUBLISHING}" = "true" ]; then
+      #       echo "Publishing to PyPI..."
+      #       uv publish --index pypi \
+      #         -u __token__ -p "${PYPI_API_TOKEN}" dist/*
+      #     else
+      #       echo "Publishing is disabled. Set ENABLE_PUBLISHING to true to enable."
+      #       exit 0
+      #     fi
