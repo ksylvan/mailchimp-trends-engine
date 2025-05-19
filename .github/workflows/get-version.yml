@@ -30,6 +30,7 @@ jobs:
           cd temp_repo
           # Check if the file exists in the branch using git ls-tree
           if git ls-tree -r --name-only HEAD | grep -q "${{ inputs.file-path }}"; then
+            git restore --staged ${{ inputs.file-path }}
             git checkout -f ${{ inputs.file-path }}
           else
             echo "Warning: File ${{ inputs.file-path }} not found in branch ${{ inputs.branch-name }}."
