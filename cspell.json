@@ -60,6 +60,8 @@
 		"pyproject",
 		"pyright",
 		"pytest",
+		"PYTHONDONTWRITEBYTECODE",
+		"PYTHONUNBUFFERED",
 		"RDBMS",
 		"readlink",
 		"redoc",
