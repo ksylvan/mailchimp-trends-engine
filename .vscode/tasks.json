@@ -23,7 +23,7 @@
 			"type": "shell",
 			"label": "Run tests",
 			"command": "make test",
-			"problemMatcher": ["$go"],
+			"problemMatcher": [],
 			"detail": "Run tests using make",
 			"presentation": {
 				"reveal": "always",

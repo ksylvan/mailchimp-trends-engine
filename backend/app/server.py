@@ -28,9 +28,10 @@ app = FastAPI(version=__version__, lifespan=lifespan)
 
 # CORS Middleware Configuration
 # Allow requests from the frontend development server and deployed frontend (NodePort)
-# The NodePort for frontend is 30306, so localhost:30306
+# The NodePort for frontend is 30900, so localhost:30900
 # Allow frontend development server (e.g., localhost:3000)
 origins = [
+    # TODO: Make this configurable via a config file in the future.
     "http://localhost",  # General localhost for flexibility if needed
     "http://localhost:3000",  # Common local dev port for frontend
     "http://localhost:30900",  # Current Frontend NodePort

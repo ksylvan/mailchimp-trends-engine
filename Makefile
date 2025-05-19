@@ -85,7 +85,8 @@ deploy-k8s:
 	kubectl apply -f kubernetes/frontend-deployment.yaml
 	kubectl apply -f kubernetes/frontend-service.yaml
 	@echo "Verifying deployments..."
-	@sleep 5 # Give pods a moment to start
+	kubectl wait --for=condition=ready pod -l app=mailchimp-trends-backend --timeout=60s
+	kubectl wait --for=condition=ready pod -l app=mailchimp-trends-frontend --timeout=60s
 	kubectl get pods -l app=mailchimp-trends-backend
 	kubectl get pods -l app=mailchimp-trends-frontend
 	kubectl get svc mailchimp-trends-backend-svc
