@@ -34,7 +34,7 @@ def test_health_check(client: TestClient):
     assert response.status_code == 200
     # app.version is initialized from __version__ in server.py
     # This test verifies the endpoint returns that version correctly.
-    assert response.json() == {"status": "ok", "version": app.version}
+    assert response.json() == {"status": "healthy", "version": app.version}
 
 
 def test_app_version_matches_about_version():
