@@ -86,7 +86,7 @@ jobs:
           if [[ "$current_version" == "$previous_version" ]]; then
             echo "Error: Version bump is required in the pull request. Version '$current_version' has not changed."
             MESSAGE="Error: Version bump is required in the pull request. The current version is \`$current_version\`."
-            MESSAGE+=" Please ensure the version in \`src/backend/src/mailchimp_trends_engine/__about__.py\` is incremented in this PR."
+            MESSAGE+=" Please ensure the version in \`backend/app/__about__.py\` is incremented in this PR."
             gh pr review ${{ github.event.number }} --request-changes --body "$MESSAGE"
           else
             echo "Version bump detected. Check passed. Going from $previous_version to $current_version."

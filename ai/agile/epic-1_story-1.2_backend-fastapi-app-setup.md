@@ -97,5 +97,5 @@
 
 ### Change Log
 
-2025-05-17 - Kayvan Sylvan - Initial draft
-2025-05-19 - Kayvan Sylvan - Updated based on progress.
+- 2025-05-17 - Kayvan Sylvan - Initial draft
+- 2025-05-19 - Kayvan Sylvan - Updated based on progress.

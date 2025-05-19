@@ -59,5 +59,5 @@
 
 ### Change Log
 
-2025-05-17 - Kayvan Sylvan - Story Drafted
-2025-05-18 - Kayvan Sylvan - Completed.
+- 2025-05-17 - Kayvan Sylvan - Story Drafted
+- 2025-05-18 - Kayvan Sylvan - Completed.

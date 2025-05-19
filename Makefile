@@ -5,7 +5,7 @@
 
 .PHONY: help bootstrap test coverage coverage-html \
 	install lint clean run docker docker-test docker-lint \
-	docker-clean
+	docker-clean build
 
 help:
 	@echo "Makefile for Mailchimp Trends Engine"

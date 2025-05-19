@@ -78,4 +78,4 @@
 
 ### Change Log
 
-2025-05-17 - Kayvan Sylvan - Initial draft
+- 2025-05-17 - Kayvan Sylvan - Initial draft
