@@ -15,7 +15,11 @@
 	],
 	"words": [
 		"activatable",
+		"addgroup",
+		"adduser",
 		"aiosqlite",
+		"appgroup",
+		"appuser",
 		"ASGI",
 		"asyncio",
 		"autoincrement",

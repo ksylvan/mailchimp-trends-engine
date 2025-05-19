@@ -21,6 +21,9 @@ RUN pnpm build
 FROM node:23-alpine AS runner
 WORKDIR /app
 
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+
 # Set environment variables
 ENV NODE_ENV=production
 # Optionally, set NEXT_TELEMETRY_DISABLED to 1 to disable telemetry

@@ -42,12 +42,12 @@ bootstrap build clean coverage coverage-html docker-build docker-run docker-stop
 	@make -C frontend $@
 
 # Backend specific commands
-backend backend-%:
+backend:
+	@echo "Please specify a target for backend (e.g., backend-test)"
+	@exit 1
+
+backend-%:
 	@target=$$(echo $@ | sed 's/^backend-//'); \
-	if [ "$$target" = "backend" ]; then \
-		echo "Please specify a target for backend (e.g., backend-test)"; \
-		exit 1; \
-	fi; \
 	echo "Running $$target for backend..."; \
 	make -C backend $$target
 
