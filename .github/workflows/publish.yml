@@ -29,6 +29,10 @@ jobs:
         uses: astral-sh/setup-uv@v6
         with:
           version: latest # Ensure a version with 'uv build' is installed
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - name: Install dependencies
         run: make bootstrap
       - name: Run tests
