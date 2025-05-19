@@ -14,6 +14,7 @@ help:
 	@echo ""
 	@echo "Targets:"
 	@echo "  bootstrap     Bootstrap the project"
+	@echo "  build         Build the project"
 	@echo "  clean         Clean up the project"
 	@echo "  coverage      Run test coverage"
 	@echo "  coverage-html Run tests and generate an HTML coverage report"
@@ -29,6 +30,9 @@ help:
 
 bootstrap:
 	make -C backend bootstrap
+
+build:
+	make -C backend build
 
 install:
 	@echo TODO: install Not yet implemented

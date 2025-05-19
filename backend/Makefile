@@ -57,7 +57,7 @@ format:
 	uv run isort .
 
 build:
-	@echo "TODO: build not implemented"
+	uv build
 
 run:
 	@echo "TODO: run not implemented"
