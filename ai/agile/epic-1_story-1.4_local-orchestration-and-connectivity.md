@@ -22,9 +22,9 @@
 ## Tasks / Subtasks
 
 - [ ] Task 1: Document Colima/k3s Setup (AC: #1, #8)
-  - [ ] Create `docs/colima-k3s-setup.md` (or a section in the main `README.md`).
-  - [ ] Provide step-by-step instructions for installing Colima.
-  - [ ] Provide instructions for starting Colima with k3s enabled (e.g., `colima start --kubernetes`).
+  - [x] Create `docs/kubernetes-setup.md` (or a section in the main `README.md`).
+  - [x] Provide step-by-step instructions for installing Colima.
+  - [x] Provide instructions for starting Colima with k3s enabled (e.g., `colima start --kubernetes`).
   - [ ] Include steps for configuring `kubectl` to connect to the Colima k3s cluster.
   - [ ] Add troubleshooting tips for common issues.
 - [ ] Task 2: Create Kubernetes Manifests for Backend (AC: #2)

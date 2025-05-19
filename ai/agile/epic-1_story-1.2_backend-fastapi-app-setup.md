@@ -1,6 +1,6 @@
 # Story 1.2: Backend "Majestic Monolith" (FastAPI) Application Setup
 
-## Status: Completed
+## Status: Complete
 
 ## Story
 
