@@ -1,6 +1,6 @@
 # Story 1.1: Project Scaffolding & Monorepo Setup
 
-## Status: In Progress
+## Status: Complete
 
 ## Story
 
@@ -39,7 +39,7 @@
   - [x] Add common ignore patterns for OS files (e.g., `.DS_Store`, `Thumbs.db`).
   - [x] Add ignore patterns for environment files (e.g., `.env`, `.env.*`, `!*.env.example`, `!*.env.local.example`).
   - [x] Add ignore patterns for local SQLite database files (e.g., `*.db`, `*.sqlite3`).
-- [ ] Task 5: Initial Commit (User Task)
+- [x] Task 5: Initial Commit (User Task)
   - [x] Stage all created files and directories.
   - [x] Make an initial Git commit with a message like "feat: Initial project scaffolding and monorepo structure (Story 1.1)".
   - [x] Push the initial commit to the remote repository (if applicable).
@@ -60,3 +60,4 @@
 ### Change Log
 
 2025-05-17 - Kayvan Sylvan - Story Drafted
+2025-05-18 - Kayvan Sylvan - Completed.

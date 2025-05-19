@@ -3,8 +3,9 @@
 # Ued to bootstrap the project, run the server, run tests, and other tasks.
 #
 
-.PHONY: help install test coverage lint clean \
-	run help bootstrap docker docker-test docker-lint docker-clean
+.PHONY: help bootstrap test coverage coverage-html \
+	install lint clean run docker docker-test docker-lint \
+	docker-clean
 
 help:
 	@echo "Makefile for Mailchimp Trends Engine"
@@ -12,39 +13,40 @@ help:
 	@echo "Usage: make [target]"
 	@echo ""
 	@echo "Targets:"
-	@echo "  install   - Install dependencies"
-	@echo "  test      - Run tests"
-	@echo "  coverage  - Run test coverage"
-	@echo "  lint      - Run linters"
-	@echo "  clean     - Clean up the project"
-	@echo "  run       - Run the server"
-	@echo "  help      - Show this help message"
-	@echo "  bootstrap  - Bootstrap the project"
-	@echo "  docker     - Build and run the Docker container"
-	@echo "  docker-test - Run tests in Docker container"
-	@echo "  docker-lint - Run linters in Docker container"
-	@echo "  docker-clean - Clean up Docker containers and images"
+	@echo "  bootstrap     Bootstrap the project"
+	@echo "  clean         Clean up the project"
+	@echo "  coverage      Run test coverage"
+	@echo "  coverage-html Run tests and generate an HTML coverage report"
+	@echo "  docker        Build and run the Docker container"
+	@echo "  docker-clean  Clean up Docker containers and images"
+	@echo "  docker-lint   Run linters in Docker container"
+	@echo "  docker-test   Run tests in Docker container"
+	@echo "  help          Show this help message"
+	@echo "  install       Install dependencies"
+	@echo "  lint          Run linters"
+	@echo "  run           Run the server"
+	@echo "  test          Run tests"
+
+bootstrap:
+	make -C backend bootstrap
 
 install:
 	@echo TODO: install Not yet implemented
 
 test: lint
-	@echo TODO: test Not yet implemented
+	make -C backend test
 
 coverage:
-	@echo TODO: coverage Not yet implemented
+	make -C backend coverage
 
 lint:
-	@echo TODO: lint Not yet implemented
+	make -C backend lint
 
 clean:
-	@echo TODO: clean Not yet implemented
+	make -C backend clean
 
 run:
 	@echo TODO: run Not yet implemented
-
-bootstrap:
-	@echo TODO: bootstrap Not yet implemented
 
 docker:
 	@echo TODO: docker Not yet implemented

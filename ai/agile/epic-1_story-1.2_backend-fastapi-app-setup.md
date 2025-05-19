@@ -1,6 +1,6 @@
 # Story 1.2: Backend "Majestic Monolith" (FastAPI) Application Setup
 
-## Status: Draft
+## Status: In Progress
 
 ## Story
 
@@ -26,28 +26,24 @@
 ## Tasks / Subtasks
 
 - [ ] Task 1: Initialize Python Environment and Package Management (AC: #1, #2, #11, #12)
-  - [ ] Create `backend/.python-version` file with content `3.13.3`.
-  - [ ] Initialize `uv` environment within `backend/` (e.g., `uv venv`).
-  - [ ] Initialize `backend/pyproject.toml` for `Hatch`.
-    - [ ] Define project metadata (name: `mailchimp-trends-backend`, version: `0.1.0`).
-    - [ ] Specify dependencies: `fastapi`, `uvicorn[standard]`, `httpx`, `python-dotenv`.
-    - [ ] Specify dev dependencies: `pytest`, `pytest-cov`, `ruff`, `pylint`.
-  - [ ] Create `backend/bootstrap/setup.sh` script to execute `uv sync` and potentially other setup steps.
-  - [ ] Ensure dependencies can be installed using `uv sync`.
+  - [x] Create `backend/.python-version` file with content `3.13.3`.
+  - [x] Initialize `uv` environment within `backend/` (e.g., `uv init`).
+  - [x] Initialize `backend/pyproject.toml` for `Hatch`.
+    - [x] Define project metadata (name: `mailchimp-trends-backend`, version: `0.1.0`).
+    - [x] Specify dependencies: `fastapi`, `uvicorn[standard]`, `httpx`, `python-dotenv`.
+    - [x] Specify dev dependencies: `pytest`, `pytest-cov`, `ruff`, `pylint`.
+  - [x] Hook up bootstrap commands - so that "make bootstrap" will set up backend.
+  - [x] Ensure dependencies can be installed using `uv sync`.
 - [ ] Task 2: Create Backend Application Directory Structure (AC: #3)
-  - [ ] Create `backend/src/mailchimp_trends/`.
-  - [ ] Create `backend/src/mailchimp_trends/__init__.py`.
-  - [ ] Create `backend/src/mailchimp_trends/main.py`.
-  - [ ] Create `backend/src/mailchimp_trends/api/` with `__init__.py`.
-  - [ ] Create `backend/src/mailchimp_trends/core/` with `__init__.py`.
-  - [ ] Create `backend/src/mailchimp_trends/db/` with `__init__.py`.
-  - [ ] Create `backend/src/mailchimp_trends/schemas/` with `__init__.py`.
-- [ ] Task 3: Implement Basic FastAPI Application & Health Endpoint (AC: #4, #5)
-  - [ ] In `backend/src/mailchimp_trends/main.py`, import FastAPI.
-  - [ ] Create a FastAPI app instance.
-  - [ ] Implement a `GET /health` endpoint.
+  - [x] Create `backend/src/app/`.
+  - [x] Create `backend/src/app/__init__.py`.
+  - [x] Create other source and test files as needed.
+- [x] Task 3: Implement Basic FastAPI Application & Health Endpoint (AC: #4, #5)
+  - [x] In `backend/app/server.py`, import FastAPI.
+  - [x] Create a FastAPI app instance.
+  - [x] Implement a `GET /health` endpoint.
     - [ ] Define a Pydantic response model for health status (e.g., in `schemas/health.py`).
-    - [ ] Return `{"status": "healthy", "version": "0.1.0"}`.
+    - [x] Return `{"status": "healthy", "version": "0.1.0"}`.
 - [ ] Task 4: Create Backend Dockerfile (AC: #6)
   - [ ] Create `backend/Dockerfile`.
   - [ ] Use an appropriate Python base image (e.g., `python:3.13-slim`).
@@ -101,4 +97,5 @@
 
 ### Change Log
 
-2025-05-17 - Kayvan Sylvan - {Description of Change, e.g., "Story Drafted"}
+2025-05-17 - Kayvan Sylvan - Initial draft
+2025-05-19 - Kayvan Sylvan - Updated based on progress.

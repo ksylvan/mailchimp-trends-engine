@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mailchimp-trends-engine"
+dynamic = ["version"]
+description = "Real-time marketing trends analysis engine with AI-powered content generation."
+authors = [{ name = "Kayvan Sylvan", email = "kayvan@sylvan.com" }]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.110.0",
+    "httpx>=0.28.1",
+    "python-dotenv>=1.1.0",
+    "uvicorn>=0.29.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/kayvan/mailchimp-trends-engine"
+"Documentation" = "https://github.com/kayvan/mailchimp-trends-engine#readme"
+"Bug Tracker" = "https://github.com/kayvan/mailchimp-trends-engine/issues"
+
+[dependency-groups]
+dev = [
+    "hatch>=1.14.1",
+    "hatchling>=1.27.0",
+    "pylint>=3.3.7",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.1.1",
+    "ruff>=0.11.10",
+    "uv>=0.7.5",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+
+[tool.hatch.version]
+path = "app/__about__.py"
+
+[tool.uv]
+index = [
+    { name = "testpypi", url = "https://test.pypi.org/simple/", publish-url = "https://test.pypi.org/legacy/", explicit = true },
+    { name = "pypi", url = "https://pypi.org/simple/", publish-url = "https://upload.pypi.org/legacy/", explicit = true },
+]
+
+[tool.hatch.build]
+# ensure editable installs pick up code under app/
+dev-mode-dirs = ["app"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.hatch.build.targets.sdist]
+sources = ["app"]
