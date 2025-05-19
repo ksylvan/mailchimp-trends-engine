@@ -25,7 +25,7 @@
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Initialize Python Environment and Package Management (AC: #1, #2, #11, #12)
+- [x] Task 1: Initialize Python Environment and Package Management (AC: #1, #2, #11, #12)
   - [x] Create `backend/.python-version` file with content `3.13.3`.
   - [x] Initialize `uv` environment within `backend/` (e.g., `uv init`).
   - [x] Initialize `backend/pyproject.toml` for `Hatch`.
@@ -34,7 +34,7 @@
     - [x] Specify dev dependencies: `pytest`, `pytest-cov`, `ruff`, `pylint`.
   - [x] Hook up bootstrap commands - so that "make bootstrap" will set up backend.
   - [x] Ensure dependencies can be installed using `uv sync`.
-- [ ] Task 2: Create Backend Application Directory Structure (AC: #3)
+- [x] Task 2: Create Backend Application Directory Structure (AC: #3)
   - [x] Create `backend/src/app/`.
   - [x] Create `backend/src/app/__init__.py`.
   - [x] Create other source and test files as needed.
