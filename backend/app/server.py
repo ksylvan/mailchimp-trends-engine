@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from .__about__ import __version__
 
@@ -24,6 +25,26 @@ async def lifespan(current_app: FastAPI):
 
 
 app = FastAPI(version=__version__, lifespan=lifespan)
+
+# CORS Middleware Configuration
+# Allow requests from the frontend development server and deployed frontend (NodePort)
+# The NodePort for frontend is 30900, so localhost:30900
+# Allow frontend development server (e.g., localhost:3000)
+origins = [
+    # TODO: Make this configurable via a config file in the future.
+    "http://localhost",  # General localhost for flexibility if needed
+    "http://localhost:3000",  # Common local dev port for frontend
+    "http://localhost:30900",  # Current Frontend NodePort
+    # Add any other origins if necessary, e.g., deployed frontend URL post-MVP
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 
 @app.get("/health")

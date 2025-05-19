@@ -1,6 +1,6 @@
 # Story 1.3: Frontend (Next.js) Application Setup with `pnpm`
 
-## Status: Done
+## Status: Complete
 
 ## Story
 
@@ -93,4 +93,4 @@
 ### Change Log
 
 - 2025-05-17 - Kayvan Sylvan - Initial draft
-- 2025-05-19 - Cline - Completed all tasks and updated status to Done.
+- 2025-05-19 - Kayvan Sylvan - Completed all tasks and updated status.

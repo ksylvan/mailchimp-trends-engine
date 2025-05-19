@@ -24,21 +24,21 @@
 ## Tasks / Subtasks
 
 - [ ] Task 1: Define Mock Article Data Structure (AC: #2)
-  - [ ] In `backend/src/mailchimp_trends/data_ingestion/mock_data_models.py` (or similar):
+  - [ ] In `backend/app//data_ingestion/mock_data_models.py` (or similar):
     - [ ] Define a Pydantic model for a mock article, e.g., `MockArticleSchema(BaseModel)` with fields like `source_url: str`, `content_text: str`, `Workspaceed_at: datetime`.
-  - [ ] Create a sample data source (e.g., `backend/src/mailchimp_trends/data_ingestion/mock_articles_data.json` or a Python list of `MockArticleSchema` instances within a `.py` file).
+  - [ ] Create a sample data source (e.g., `backend/app//data_ingestion/mock_articles_data.json` or a Python list of `MockArticleSchema` instances within a `.py` file).
     - [ ] Populate with 3-5 diverse mock articles. Ensure `content_text` is substantial enough for basic NLP testing later.
 - [ ] Task 2: Implement Mock Data Service (AC: #1, #3, #4)
-  - [ ] Create `backend/src/mailchimp_trends/data_ingestion/mock_data_service.py`.
+  - [ ] Create `backend/app//data_ingestion/mock_data_service.py`.
   - [ ] Implement a function `load_mock_articles() -> List[MockArticleSchema]` to load data from the JSON file or return the hardcoded list.
   - [ ] Implement `get_mock_article_by_url(url: str, mock_articles: List[MockArticleSchema]) -> MockArticleSchema | None`.
   - [ ] Implement `get_all_mock_articles(mock_articles: List[MockArticleSchema]) -> List[MockArticleSchema]`.
   - [ ] Ensure `content_text` served by these functions is in a format (plain text or simple Markdown) that mimics Jina's output and is ready for NLP.
 - [ ] Task 3: Integrate Mock Plugin Toggle into Ingestion Process (AC: #6)
-  - [ ] In `backend/src/mailchimp_trends/core/config.py`:
+  - [ ] In `backend/app//core/config.py`:
     - [ ] Add a new setting: `USE_MOCK_DATA_INGESTION: bool = False` (load from env var `USE_MOCK_DATA_INGESTION`).
     - [ ] Update `backend/.env.example` with `USE_MOCK_DATA_INGESTION=False`.
-  - [ ] Modify `perform_scheduled_article_fetch` in `backend/src/mailchimp_trends/data_ingestion/scheduler.py` (from Story 2.2):
+  - [ ] Modify `perform_scheduled_article_fetch` in `backend/app//data_ingestion/scheduler.py` (from Story 2.2):
     - [ ] Check `settings.USE_MOCK_DATA_INGESTION`.
     - [ ] If `True`:
       - [ ] Load mock articles using `mock_data_service.load_mock_articles()`.

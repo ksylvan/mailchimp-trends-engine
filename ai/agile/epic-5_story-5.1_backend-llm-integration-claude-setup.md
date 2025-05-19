@@ -24,7 +24,7 @@
 ## Tasks / Subtasks
 
 - [ ] Task 1: Define Generic LLM Service Interface (AC: #1)
-  - [ ] Create `backend/src/mailchimp_trends/llm_integration/llm_service_protocol.py`.
+  - [ ] Create `backend/app//llm_integration/llm_service_protocol.py`.
   - [ ] Define a `typing.Protocol` or an `abc.ABC` for the LLM service.
 
         ```python
@@ -40,7 +40,7 @@
 - [ ] Task 2: Add Anthropic SDK Dependency (AC: #3)
   - [ ] Add `anthropic` to `backend/pyproject.toml` and run `uv sync`.
 - [ ] Task 3: Implement `ClaudeLLMService` (AC: #2, #4, #6)
-  - [ ] Create `backend/src/mailchimp_trends/llm_integration/claude_service.py`.
+  - [ ] Create `backend/app//llm_integration/claude_service.py`.
   - [ ] Implement `class ClaudeLLMService(LLMServiceProtocol):`.
     - [ ] In `__init__`, load the `CLAUDE_API_KEY` from `core.config.settings`. Raise an error if not found.
     - [ ] Initialize the `anthropic.AsyncAnthropic` client with the API key.

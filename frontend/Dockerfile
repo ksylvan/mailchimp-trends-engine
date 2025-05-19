@@ -14,6 +14,11 @@ RUN pnpm install --frozen-lockfile
 # Copy the rest of the application source code
 COPY . .
 
+# Define an argument for the API URL
+ARG NEXT_PUBLIC_API_URL
+# Set the environment variable for the build process
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+
 # Build the Next.js application
 RUN pnpm build
 

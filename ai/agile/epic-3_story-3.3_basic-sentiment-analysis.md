@@ -25,7 +25,7 @@
   - [ ] *Initial Suggestion: `distilbert-base-uncased-finetuned-sst-2-english` (outputs positive/negative, may need mapping to neutral or choosing another model for 3-class), or a dedicated 3-class sentiment model like `cardiffnlp/twitter-roberta-base-sentiment-latest` (outputs label_0, label_1, label_2 which map to neg, neu, pos).*
   - [ ] Document the chosen model name in `nlp_processing/sentiment_analysis_service.py`.
 - [ ] Task 2: Implement Sentiment Analysis Service (AC: #2, #3, #4, #7)
-  - [ ] Create `backend/src/mailchimp_trends/nlp_processing/sentiment_analysis_service.py`.
+  - [ ] Create `backend/app//nlp_processing/sentiment_analysis_service.py`.
   - [ ] Initialize the Hugging Face pipeline for sentiment analysis (e.g., `pipeline("sentiment-analysis", model="chosen_model_name")`). Load once for efficiency.
   - [ ] Implement `async def analyze_sentiment(text_or_tokens: Union[str, List[str]]) -> str:` (e.g., returning "positive", "negative", "neutral").
     - [ ] If input is a list of tokens, join them to a string.
@@ -34,10 +34,10 @@
     - [ ] If the model only provides positive/negative, decide on a threshold for score to classify as neutral, or default to neutral if scores are low for both, or choose a 3-class model. For MVP, a 3-class model is simpler if available and good. If using a 2-class model, a simple approach: if score for POSITIVE > 0.6 return "positive", if score for NEGATIVE > 0.6 return "negative", else "neutral".
     - [ ] Handle potential errors or low-confidence outputs gracefully (e.g., default to "neutral").
 - [ ] Task 3: Integrate Sentiment Storage into Data Processing Flow (AC: #5)
-  - [ ] Update `ProcessedArticleDataModel` in `backend/src/mailchimp_trends/db/models_db.py` to include `overall_sentiment = Column(String, nullable=True)`.
+  - [ ] Update `ProcessedArticleDataModel` in `backend/app//db/models_db.py` to include `overall_sentiment = Column(String, nullable=True)`.
 
         ```python
-        # backend/src/mailchimp_trends/db/models_db.py
+        # backend/app//db/models_db.py
         # class ProcessedArticleDataModel(Base):
         #    # ... other fields
         #    overall_sentiment = Column(String, nullable=True) # e.g., "positive", "negative", "neutral"

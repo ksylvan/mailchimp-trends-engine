@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mailchimp-trends-frontend-svc # mailchimp-trends-frontend-svc as per story guidance
+  labels:
+    app: mailchimp-trends-frontend
+spec:
+  type: NodePort # Exposes the service on each Node's IP at a static port (the NodePort).
+  selector:
+    app: mailchimp-trends-frontend # Must match the labels of the frontend Deployment's pods
+  ports:
+  - name: http
+    port: 3000       # Port the service will be available on within the cluster
+    targetPort: 3000 # Port the frontend container (Next.js app) is listening on
+    nodePort: 30900  # Fixed NodePort for host accessibility
+    protocol: TCP

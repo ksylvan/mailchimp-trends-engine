@@ -1,6 +1,6 @@
 # Story 1.2: Backend "Majestic Monolith" (FastAPI) Application Setup
 
-## Status: Completed
+## Status: Complete
 
 ## Story
 
@@ -12,8 +12,8 @@
 
 1. A Python virtual environment is created and managed using `uv` (as per `architecture.md`).
 2. A `pyproject.toml` file is configured for the backend project using `Hatch` as the build system, defining project metadata and core dependencies (e.g., `fastapi`, `uvicorn`, `httpx`, `pytest`).
-3. The backend source code is organized under `backend/src/mailchimp_trends/` with initial subdirectories for `api/`, `core/`, `db/`, `schemas/` and a `main.py` as per `architecture.md` ("Project Structure" and "Component View").
-4. A basic FastAPI application is initialized in `backend/src/mailchimp_trends/main.py`.
+3. The backend source code is organized under `backend/app//` with initial subdirectories for `api/`, `core/`, `db/`, `schemas/` and a `main.py` as per `architecture.md` ("Project Structure" and "Component View").
+4. A basic FastAPI application is initialized in `backend/app//main.py`.
 5. A simple `/health` API endpoint is implemented in the FastAPI application that returns a JSON response like `{"status": "healthy", "version": "x.y.z"}` (version can be hardcoded initially, e.g., "0.1.0").
 6. A `Dockerfile` is created in the `backend/` directory to containerize the FastAPI application.
 7. The Docker image for the backend application can be built successfully.
@@ -76,7 +76,7 @@
 - **Pydantic Models for Schemas:** Even for the simple health check, defining a response model in `schemas/` (e.g., `schemas/health_schemas.py`) is good practice from the start.
 
     ```python
-    # Example: backend/src/mailchimp_trends/schemas/health_schemas.py
+    # Example: backend/app//schemas/health_schemas.py
     from pydantic import BaseModel
 
     class HealthResponse(BaseModel):

@@ -26,7 +26,7 @@
 ## Tasks / Subtasks
 
 - [ ] Task 1: Define Request/Response Schemas for Content Generation (AC: #5, #6)
-  - [ ] In `backend/src/mailchimp_trends/schemas/llm_schemas.py` (or similar):
+  - [ ] In `backend/app//schemas/llm_schemas.py` (or similar):
     - [ ] Define `GeneratedContentIdeasSchema(BaseModel)`:
       - `email_subject_lines: List[str]`
       - `email_body_copy: str`
@@ -37,11 +37,11 @@
       - `generated_content: GeneratedContentIdeasSchema`
   - [ ] The API will use `GenerateContentResponseSchema` for its response. No request body is needed for MVP as per `architecture.md` API spec (uses trend_id from path).
 - [ ] Task 2: Implement API Endpoint for Content Generation (AC: #1)
-  - [ ] Create a new router, e.g., `backend/src/mailchimp_trends/api/v1/llm_router.py`.
+  - [ ] Create a new router, e.g., `backend/app//api/v1/llm_router.py`.
   - [ ] Implement `POST /trends/{trend_id}/generate-content-ideas` endpoint.
   - [ ] This endpoint will depend on a new service function (see Task 3).
 - [ ] Task 3: Implement Content Generation Service Logic (AC: #2, #3, #4, #8)
-  - [ ] In `backend/src/mailchimp_trends/llm_integration/content_generation_service.py`:
+  - [ ] In `backend/app//llm_integration/content_generation_service.py`:
     - [ ] Create `async def generate_marketing_content_for_trend(db: AsyncSession, llm_service: LLMServiceProtocol, trend_id: int) -> GenerateContentResponseSchema:`. (Note: `trend_id` is likely `int` if it's the PK from `MarketingTrendModel`).
     - [ ] Fetch `MarketingTrendModel` data from DB using `trend_id`. Handle "not found" errors (raise HTTPException 404).
     - [ ] **Prompt Engineering (Crucial):**

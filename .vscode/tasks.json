@@ -18,6 +18,32 @@
 			"runOptions": {
 				"runOn": "folderOpen"
 			}
+		},
+		{
+			"type": "shell",
+			"label": "Run tests",
+			"command": "make test",
+			"problemMatcher": [],
+			"detail": "Run tests using make",
+			"presentation": {
+				"reveal": "always",
+				"echo": true,
+				"focus": true,
+				"panel": "new"
+			}
+		},
+		{
+			"type": "shell",
+			"label": "Run tests with coverage",
+			"command": "make test-coverage",
+			"problemMatcher": ["$go"],
+			"detail": "Run tests with coverage using make",
+			"presentation": {
+				"reveal": "always",
+				"echo": true,
+				"focus": true,
+				"panel": "new"
+			}
 		}
 	]
 }

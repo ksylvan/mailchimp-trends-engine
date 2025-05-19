@@ -5,7 +5,8 @@
 
 .PHONY: help bootstrap test coverage coverage-html \
 	install lint clean run dev docker-build docker-run docker-stop \
-	docker-clean build frontend backend format
+	docker-clean build frontend backend format \
+	deploy-k8s undeploy-k8s
 
 help:
 	@echo "Makefile for Mailchimp Trends Engine"
@@ -29,6 +30,8 @@ help:
 	@echo "  start         Start the production frontend server"
 	@echo "  tag           Tag the current git HEAD with the semantic versioning name"
 	@echo "  test          Run tests (both frontend and backend)"
+	@echo "  deploy-k8s    Deploy applications to local k3s cluster"
+	@echo "  undeploy-k8s  Remove applications from local k3s cluster"
 	@echo ""
 	@echo "Prefixed targets:"
 	@echo "  backend-*     Run target only for backend (e.g., make backend-test)"
@@ -73,3 +76,28 @@ dev:
 start:
 	@echo "Starting frontend production server..."
 	@make -C frontend start
+
+# Kubernetes deployment commands
+deploy-k8s:
+	@echo "Deploying applications to local k3s cluster..."
+	kubectl apply -f kubernetes/backend-deployment.yaml
+	kubectl apply -f kubernetes/backend-service.yaml
+	kubectl apply -f kubernetes/frontend-deployment.yaml
+	kubectl apply -f kubernetes/frontend-service.yaml
+	@echo "Verifying deployments..."
+	kubectl wait --for=condition=ready pod -l app=mailchimp-trends-backend --timeout=60s
+	kubectl wait --for=condition=ready pod -l app=mailchimp-trends-frontend --timeout=60s
+	kubectl get pods -l app=mailchimp-trends-backend
+	kubectl get pods -l app=mailchimp-trends-frontend
+	kubectl get svc mailchimp-trends-backend-svc
+	kubectl get svc mailchimp-trends-frontend-svc
+
+undeploy-k8s:
+	@echo "Removing applications from local k3s cluster..."
+	kubectl delete -f kubernetes/frontend-service.yaml --ignore-not-found=true
+	kubectl delete -f kubernetes/frontend-deployment.yaml --ignore-not-found=true
+	kubectl delete -f kubernetes/backend-service.yaml --ignore-not-found=true
+	kubectl delete -f kubernetes/backend-deployment.yaml --ignore-not-found=true
+	@echo "Verifying removal..."
+	kubectl get pods
+	kubectl get svc
