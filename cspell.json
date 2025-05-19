@@ -57,6 +57,7 @@
 		"pyright",
 		"pytest",
 		"RDBMS",
+		"readlink",
 		"redoc",
 		"sandboxed",
 		"Sched",

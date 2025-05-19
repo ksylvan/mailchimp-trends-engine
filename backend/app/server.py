@@ -31,7 +31,7 @@ async def health_check():
     """
     Health check endpoint.
     """
-    return {"status": "ok", "version": app.version}
+    return {"status": "healthy", "version": app.version}
 
 
 def main(log_level: str = "info") -> None:

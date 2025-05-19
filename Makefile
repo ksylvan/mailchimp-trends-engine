@@ -18,48 +18,15 @@ help:
 	@echo "  clean         Clean up the project"
 	@echo "  coverage      Run test coverage"
 	@echo "  coverage-html Run tests and generate an HTML coverage report"
-	@echo "  docker        Build and run the Docker container"
-	@echo "  docker-clean  Clean up Docker containers and images"
-	@echo "  docker-lint   Run linters in Docker container"
-	@echo "  docker-test   Run tests in Docker container"
+	@echo "  docker-build  Build the Docker image for the backend"
+	@echo "  docker-run    Run the backend application using Docker"
+	@echo "  format        Format the codebase"
 	@echo "  help          Show this help message"
-	@echo "  install       Install dependencies"
 	@echo "  lint          Run linters"
 	@echo "  run           Run the server"
+	@echo "  tag           Tag the current git HEAD with the semantic versioning name."
 	@echo "  test          Run tests"
 
-bootstrap:
-	make -C backend bootstrap
+bootstrap build clean coverage coverage-html format docker-build docker-run lint tag test:
+	make -C backend $@
 
-build:
-	make -C backend build
-
-install:
-	@echo TODO: install Not yet implemented
-
-test: lint
-	make -C backend test
-
-coverage:
-	make -C backend coverage
-
-lint:
-	make -C backend lint
-
-clean:
-	make -C backend clean
-
-run:
-	@echo TODO: run Not yet implemented
-
-docker:
-	@echo TODO: docker Not yet implemented
-
-docker-test:
-	@echo TODO: docker-test Not yet implemented
-
-docker-lint:
-	@echo TODO: docker-lint Not yet implemented
-
-docker-clean:
-	@echo TODO: docker-clean Not yet implemented
