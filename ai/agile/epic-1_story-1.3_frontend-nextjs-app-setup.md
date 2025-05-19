@@ -1,6 +1,6 @@
 # Story 1.3: Frontend (Next.js) Application Setup with `pnpm`
 
-## Status: Draft
+## Status: Done
 
 ## Story
 
@@ -26,49 +26,50 @@
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Initialize Next.js Project with TypeScript and `pnpm` (AC: #1, #2)
-  - [ ] Navigate to the `frontend/` directory.
-  - [ ] Initialize Next.js project using `pnpm create next-app@latest . --typescript --eslint --tailwind --src-dir --app --import-alias "@/*"` (or adjust flags for current best practices for Next.js 15, ensuring App Router and TypeScript).
-  - [ ] Verify `package.json` uses `pnpm`.
-- [ ] Task 2: Integrate Tailwind CSS (AC: #3)
-  - [ ] Ensure Tailwind CSS is set up during Next.js initialization (usually handled by `create-next-app` flags).
-  - [ ] Verify `tailwind.config.js` and `postcss.config.mjs` are present and correctly configured.
-  - [ ] Create `frontend/app/globals.css` with Tailwind directives (`@tailwind base; @tailwind components; @tailwind utilities;`).
-  - [ ] Define Mailchimp color palette and `fontFamily` (Helvetica Neue) in `frontend/tailwind.config.js` under `theme.extend` as per `frontend-architecture.md` and `ui-ux-spec.md`.
-- [ ] Task 3: Initialize `shadcn/ui` and Add Lucide Icons (AC: #4, #5)
-  - [ ] Initialize `shadcn/ui` using its `pnpm` CLI command (e.g., `pnpm dlx shadcn-ui@latest init`). Follow prompts for configuration (e.g., `globals.css` location, CSS variables, `tailwind.config.js`).
-  - [ ] Add `lucide-react` as a dependency: `pnpm add lucide-react`.
-- [ ] Task 4: Create Basic Homepage (AC: #6)
-  - [ ] Ensure `frontend/app/layout.tsx` and `frontend/app/page.tsx` (or `frontend/app/(dashboard)/page.tsx` and `frontend/app/(dashboard)/layout.tsx` if using a route group immediately) are created.
-  - [ ] Modify the page component to display a simple placeholder message.
-  - [ ] Apply basic Mailchimp page background style (e.g., `bg-light-grey-bg` from `globals.css`/`tailwind.config.js`) in the root layout.
-- [ ] Task 5: Create Frontend Dockerfile (AC: #7)
-  - [ ] Create `frontend/Dockerfile`.
-  - [ ] Use a multi-stage build.
-    - [ ] Stage 1 (Builder): Use `node:22-alpine` (or similar Node.js 22 base) as `builder`. Set `WORKDIR`. Copy `package.json`, `pnpm-lock.yaml`. Run `pnpm install --frozen-lockfile`. Copy the rest of the frontend source. Run `pnpm build`.
-    - [ ] Stage 2 (Runner): Use `node:22-alpine` as `runner`. Set `WORKDIR`. Copy built assets (`.next/standalone` or `.next` static and public folders) from the `builder` stage. Expose port 3000. Set `CMD ["node", "server.js"]` (or appropriate command for Next.js standalone output).
-  - [ ] Ensure `output: 'standalone'` is configured in `next.config.mjs` for optimized Docker image.
-- [ ] Task 6: Configure Linters & Formatters (AC: #11)
-  - [ ] Ensure ESLint and Prettier are configured (typically done by `create-next-app` and can be customized).
-  - [ ] Add Prettier config file (e.g., `.prettierrc.json`).
-  - [ ] Add ESLint config file (e.g., `.eslintrc.json`).
-  - [ ] Ensure initial code passes linting (`pnpm lint`) and formatting.
-- [ ] Task 7: Define `pnpm` Scripts (AC: #10)
-  - [ ] Verify/update `frontend/package.json` scripts:
-    - `dev`: `next dev`
+- [x] Task 1: Initialize Next.js Project with TypeScript and `pnpm` (AC: #1, #2)
+  - [x] Navigate to the `frontend/` directory.
+  - [x] Initialize Next.js project using `pnpm create next-app@latest . --typescript --eslint --tailwind --src-dir --app --import-alias "@/*"` (or adjust flags for current best practices for Next.js 15, ensuring App Router and TypeScript).
+  - [x] Verify `package.json` uses `pnpm`.
+- [x] Task 2: Integrate Tailwind CSS (AC: #3)
+  - [x] Ensure Tailwind CSS is set up during Next.js initialization (usually handled by `create-next-app` flags).
+  - [x] Verify `tailwind.config.ts` and `postcss.config.mjs` are present and correctly configured.
+  - [x] Create `frontend/src/app/globals.css` with Tailwind directives (`@import "tailwindcss";`).
+  - [x] Define Mailchimp color palette and `fontFamily` (Helvetica Neue) in `frontend/tailwind.config.ts` and `frontend/src/app/globals.css`.
+- [x] Task 3: Initialize `shadcn/ui` and Add Lucide Icons (AC: #4, #5)
+  - [x] Initialize `shadcn/ui` using its `pnpm` CLI command (`pnpm dlx shadcn@latest init`). Follow prompts for configuration.
+  - [x] Add `lucide-react` as a dependency: `pnpm add lucide-react`.
+- [x] Task 4: Create Basic Homepage (AC: #6)
+  - [x] Ensure `frontend/src/app/layout.tsx` and `frontend/src/app/page.tsx` are created.
+  - [x] Modify the page component to display a simple placeholder message.
+  - [x] Apply basic Mailchimp page background style and font in the root layout via `globals.css`.
+- [x] Task 5: Create Frontend Dockerfile (AC: #7)
+  - [x] Create `frontend/Dockerfile`.
+  - [x] Use a multi-stage build.
+    - [x] Stage 1 (Builder): Use `node:22-alpine` as `builder`. Set `WORKDIR`. Copy `package.json`, `pnpm-lock.yaml`. Run `pnpm install --frozen-lockfile`. Copy the rest of the frontend source. Run `pnpm build`.
+    - [x] Stage 2 (Runner): Use `node:22-alpine` as `runner`. Set `WORKDIR`. Copy built assets (`.next/standalone`, `.next/static`, `public`) from the `builder` stage. Expose port 3000. Set `CMD ["node", "server.js"]`.
+  - [x] Ensure `output: 'standalone'` is configured in `next.config.ts` for optimized Docker image.
+- [x] Task 6: Configure Linters & Formatters (AC: #11)
+  - [x] Ensure ESLint and Prettier are configured.
+  - [x] Add Prettier config file (`frontend/.prettierrc.json`).
+  - [x] ESLint config `frontend/eslint.config.mjs` was created by `create-next-app`.
+  - [x] Ensure initial code passes linting (`pnpm lint --fix`) and formatting (`pnpm format`). (Installed `prettier` and `eslint-plugin-react-hooks`, `@next/eslint-plugin-next` to fix build issues).
+- [x] Task 7: Define `pnpm` Scripts (AC: #10)
+  - [x] Verify/update `frontend/package.json` scripts:
+    - `dev`: `next dev` (removed `--turbopack`)
     - `build`: `next build`
     - `start`: `next start`
     - `lint`: `next lint`
+    - `format`: `prettier --write "**/*.{ts,tsx,css,md,json}" --ignore-path .gitignore` (added)
     - `test`: (Placeholder for Jest setup in Story 1.6, e.g., `jest --watch`)
-- [ ] Task 8: Setup `pnpm` Workspaces (Optional but Recommended) (AC: #12)
-  - [ ] In the project root (outside `frontend/`), create `pnpm-workspace.yaml`.
-  - [ ] Add `packages:\n  - 'frontend'\n  - 'backend'` (or just `frontend` if backend isn't managed by pnpm).
-- [ ] Task 9: Create `.env.local.example` (AC: #13)
-  - [ ] Create `frontend/.env.local.example` with `NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1`.
-- [ ] Task 10: Verify Docker Build and Run (AC: #8, #9)
-  - [ ] Build the Docker image.
-  - [ ] Run the container locally, mapping port 3000.
-  - [ ] Access the application in a browser to verify the basic homepage.
+- [x] Task 8: Setup `pnpm` Workspaces (Optional but Recommended) (AC: #12)
+  - [x] In the project root (outside `frontend/`), create `pnpm-workspace.yaml`.
+  - [x] Add `packages:\n  - 'frontend'`
+- [x] Task 9: Create `.env.local.example` (AC: #13)
+  - [x] Create `frontend/.env.local.example` with `NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1`.
+- [x] Task 10: Verify Docker Build and Run (AC: #8, #9)
+  - [x] Build the Docker image.
+  - [x] Run the container locally, mapping port 3000.
+  - [x] Access the application in a browser to verify the basic homepage.
 
 ## Dev Technical Guidance
 
@@ -83,8 +84,13 @@
 
 ### Completion Notes List
 
-{Any notes about implementation choices, difficulties, or follow-up needed}
+- Story completed successfully.
+- Initial Docker build failed due to missing ESLint plugins (`eslint-plugin-react-hooks`, `@next/eslint-plugin-next`). These were installed, and the build then succeeded.
+- `shadcn-ui` CLI package name was updated from `shadcn-ui` to `shadcn` during initialization.
+- Tailwind CSS v4 setup by `create-next-app` uses `@import "tailwindcss";` and `@theme` directive in `globals.css`, which differs slightly from older Tailwind setups but is the current standard. Mailchimp theme colors and fonts were integrated into this new structure.
+- Removed `--turbopack` from the `dev` script in `package.json` as it was not an intentional choice for this story.
 
 ### Change Log
 
 - 2025-05-17 - Kayvan Sylvan - Initial draft
+- 2025-05-19 - Cline - Completed all tasks and updated status to Done.
