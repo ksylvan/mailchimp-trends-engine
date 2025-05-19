@@ -24,7 +24,7 @@
   - [ ] Decide on time window for frequency calculation (e.g., past 7 days vs. previous 7 days, or a simpler "current batch vs. historical average"). For MVP, a simple approach: consider all "recent" `ProcessedArticleDataModel` entries (e.g., last X days, configurable) for "current" frequency, and older ones for "past" frequency.
   - [ ] Define a simple scoring formula. Example: `trend_score = (current_frequency * weight_freq) + (growth_factor * weight_growth)`. `growth_factor` could be `(current_freq - past_freq) / past_freq` or simpler if `past_freq` is 0. Keep weights configurable.
 - [ ] Task 2: Implement Trend Aggregation and Calculation Service (AC: #1, #2, #3, #4)
-  - [ ] Create `backend/src/mailchimp_trends/trend_identification/trend_service.py`.
+  - [ ] Create `backend/app//trend_identification/trend_service.py`.
   - [ ] Implement `async def identify_and_score_trends(db: AsyncSession) -> List[MarketingTrendModel]:`.
     - [ ] Fetch `ProcessedArticleDataModel` records. Focus on those with `marketing_keywords_matched` (relevant topics from Story 3.4).
     - [ ] For each unique relevant topic:

@@ -21,10 +21,10 @@
 ## Tasks / Subtasks
 
 - [ ] Task 1: Define/Refine SQLAlchemy Model for Raw Articles (AC: #5)
-  - [ ] Review `RawArticleModel` in `backend/src/mailchimp_trends/db/models_db.py` (as defined in `architecture.md`). Ensure it includes fields for `id` (PK), `source_url` (unique), `content_text`, and `Workspaceed_at`.
+  - [ ] Review `RawArticleModel` in `backend/app//db/models_db.py` (as defined in `architecture.md`). Ensure it includes fields for `id` (PK), `source_url` (unique), `content_text`, and `Workspaceed_at`.
 
         ```python
-        # backend/src/mailchimp_trends/db/models_db.py
+        # backend/app//db/models_db.py
         # class RawArticleModel(Base):
         #     __tablename__ = "raw_articles"
         #     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
@@ -35,7 +35,7 @@
 
   - [ ] Ensure the database schema is created/updated if `main.py` or a startup script runs `Base.metadata.create_all(bind=engine)`.
 - [ ] Task 2: Create Raw Content Storage Service/Functions (AC: #1, #2, #4)
-  - [ ] Create `backend/src/mailchimp_trends/data_ingestion/content_store_service.py`.
+  - [ ] Create `backend/app//data_ingestion/content_store_service.py`.
   - [ ] Implement `async def save_raw_article(db: AsyncSession, source_url: str, content_text: str) -> RawArticleModel | None:`
     - [ ] Check if an article with the `source_url` already exists in the database.
       - [ ] If yes, log that content for this URL already exists and optionally update `Workspaceed_at` or return the existing record. (For MVP, simply skip re-inserting and log).
@@ -45,7 +45,7 @@
   - [ ] Implement `async def get_raw_article_by_url(db: AsyncSession, source_url: str) -> RawArticleModel | None:` (for testing/verification).
   - [ ] Implement `async def get_unprocessed_articles(db: AsyncSession, limit: int = 10) -> List[RawArticleModel]:` (AC #1 - placeholder for NLP module, actual criteria for "unprocessed" might be refined in NLP stories, e.g., by checking for linked processed data). For now, it can just fetch recent articles.
 - [ ] Task 3: Integrate Storage into Fetching Process (AC: #6)
-  - [ ] Modify `perform_scheduled_article_fetch` in `backend/src/mailchimp_trends/data_ingestion/scheduler.py` (or wherever it was defined in Story 2.2).
+  - [ ] Modify `perform_scheduled_article_fetch` in `backend/app//data_ingestion/scheduler.py` (or wherever it was defined in Story 2.2).
   - [ ] Inject `AsyncSession` (FastAPI dependency injection) into this function or ensure it can access one.
   - [ ] After `jina_ai_service.fetch_article_content(url)` successfully returns content:
     - [ ] Call `save_raw_article(db=db, source_url=url, content_text=fetched_content)`.
@@ -69,7 +69,7 @@
 - **SQLAlchemy Session Management:** Use FastAPI's dependency injection for `AsyncSession`. Define a dependency like:
 
         ```python
-        # backend/src/mailchimp_trends/db/session.py (example)
+        # backend/app//db/session.py (example)
         from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
         from sqlalchemy.orm import sessionmaker
         from mailchimp_trends.core.config import settings # Assuming DB URL is in settings

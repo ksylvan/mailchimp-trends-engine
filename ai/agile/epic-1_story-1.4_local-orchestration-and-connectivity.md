@@ -1,6 +1,6 @@
 # Story 1.4: Local Orchestration & Initial Frontend-Backend Connectivity (Colima/k3s)
 
-## Status: Draft
+## Status: Nearly Complete
 
 ## Story
 
@@ -21,43 +21,44 @@
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Document Colima/k3s Setup (AC: #1, #8)
+- [x] Task 1: Document Colima/k3s Setup (AC: #1, #8)
   - [x] Create `docs/kubernetes-setup.md` (or a section in the main `README.md`).
   - [x] Provide step-by-step instructions for installing Colima.
   - [x] Provide instructions for starting Colima with k3s enabled (e.g., `colima start --kubernetes`).
-  - [ ] Include steps for configuring `kubectl` to connect to the Colima k3s cluster.
-  - [ ] Add troubleshooting tips for common issues.
-- [ ] Task 2: Create Kubernetes Manifests for Backend (AC: #2)
-  - [ ] Create `kubernetes/backend-deployment.yaml`:
-    - [ ] Define a `Deployment` for the backend FastAPI application.
-    - [ ] Use the Docker image built in Story 1.2 (e.g., `mailchimp-trends-backend:latest` or a locally tagged version).
-    - [ ] Specify necessary environment variables (e.g., `PORT=8000`, `BACKEND_VERSION`). For secrets like API keys (post-MVP), use k8s Secrets.
-    - [ ] Define resource requests/limits (optional for local, good practice).
-    - [ ] Set up readiness and liveness probes targeting the `/health` endpoint.
-  - [ ] Create `kubernetes/backend-service.yaml`:
-    - [ ] Define a `Service` (e.g., ClusterIP type, named `mailchimp-trends-backend-svc`) to expose the backend deployment within the cluster on port 8000.
-- [ ] Task 3: Create Kubernetes Manifests for Frontend (AC: #2)
-  - [ ] Create `kubernetes/frontend-deployment.yaml`:
-    - [ ] Define a `Deployment` for the frontend Next.js application.
-    - [ ] Use the Docker image built in Story 1.3 (e.g., `mailchimp-trends-frontend:latest`).
-    - [ ] Specify necessary environment variables (e.g., `PORT=3000`, `NEXT_PUBLIC_API_URL=http://mailchimp-trends-backend-svc:8000/api/v1`).
-    - [ ] Define resource requests/limits (optional).
-  - [ ] Create `kubernetes/frontend-service.yaml`:
-    - [ ] Define a `Service` (e.g., NodePort or LoadBalancer type for local accessibility, named `mailchimp-trends-frontend-svc`) to expose the frontend deployment on port 3000.
-- [ ] Task 4: Deploy Applications to Colima/k3s (AC: #3, #4, #5)
-  - [ ] Ensure local Docker images for backend and frontend are available to k3s (e.g., by using Colima's Docker socket or pushing to a local k3s registry if set up, or setting `imagePullPolicy: Never/IfNotPresent` for locally built images).
-  - [ ] Apply the manifests: `kubectl apply -f kubernetes/backend-deployment.yaml -f kubernetes/backend-service.yaml -f kubernetes/frontend-deployment.yaml -f kubernetes/frontend-service.yaml`.
-  - [ ] Verify pods are running: `kubectl get pods`.
-  - [ ] Verify services are created: `kubectl get svc`.
-  - [ ] Access the frontend service from the host browser via its NodePort or LoadBalancer IP/port.
-- [ ] Task 5: Implement Frontend to Backend `/health` Call (AC: #6, #7)
-  - [ ] In the frontend application (e.g., `frontend/app/(dashboard)/page.tsx` or a dedicated component):
-    - [ ] Add logic (e.g., in a `useEffect` hook) to call the backend's `/health` endpoint.
-    - [ ] Ensure the `NEXT_PUBLIC_API_URL` in the frontend correctly points to the backend's k8s service name (e.g., `http://mailchimp-trends-backend-svc:8000/api/v1`). Note: The `/health` endpoint is typically at the root of the API service, not under `/api/v1` if `/api/v1` is a router prefix. Adjust URL accordingly (e.g. `http://mailchimp-trends-backend-svc:8000/health`).
-    - [ ] Store the response (or error) in component state.
-    - [ ] Display the status (e.g., "Backend Status: Healthy - Version 0.1.0") or an error message on the page.
-- [ ] Task 6: Update Root Makefile (Optional)
-  - [ ] Add targets to the root `Makefile` like `make deploy-k8s` (applies all manifests) and `make undeploy-k8s` (deletes all manifests).
+  - [x] Include steps for configuring `kubectl` to connect to the Colima k3s cluster.
+  - [x] Add troubleshooting tips for common issues.
+- [x] Task 2: Create Kubernetes Manifests for Backend (AC: #2)
+  - [x] Create `kubernetes/backend-deployment.yaml`:
+    - [x] Define a `Deployment` for the backend FastAPI application.
+    - [x] Use the Docker image built in Story 1.2 (e.g., `mailchimp-trends-backend:latest` or a locally tagged version).
+    - [x] Specify necessary environment variables (e.g., `PORT=8000`, `BACKEND_VERSION`). For secrets like API keys (post-MVP), use k8s Secrets.
+    - [x] Define resource requests/limits (optional for local, good practice).
+    - [x] Set up readiness and liveness probes targeting the `/health` endpoint.
+  - [x] Create `kubernetes/backend-service.yaml`:
+    - [x] Define a `Service` (e.g., ClusterIP type, named `mailchimp-trends-backend-svc`) to expose the backend deployment within the cluster on port 8000. (Note: Changed to NodePort for host access during implementation).
+- [x] Task 3: Create Kubernetes Manifests for Frontend (AC: #2)
+  - [x] Create `kubernetes/frontend-deployment.yaml`:
+    - [x] Define a `Deployment` for the frontend Next.js application.
+    - [x] Use the Docker image built in Story 1.3 (e.g., `mailchimp-trends-frontend:latest`).
+    - [x] Specify necessary environment variables (e.g., `PORT=3000`, `NEXT_PUBLIC_API_URL=http://mailchimp-trends-backend-svc:8000/api/v1`). (Note: API URL was adjusted to localhost with NodePort during implementation).
+    - [x] Define resource requests/limits (optional).
+  - [x] Create `kubernetes/frontend-service.yaml`:
+    - [x] Define a `Service` (e.g., NodePort or LoadBalancer type for local accessibility, named `mailchimp-trends-frontend-svc`) to expose the frontend deployment on port 3000.
+- [x] Task 4: Deploy Applications to Colima/k3s (AC: #3, #4, #5)
+  - [x] Ensure local Docker images for backend and frontend are available to k3s (e.g., by using Colima's Docker socket or pushing to a local k3s registry if set up, or setting `imagePullPolicy: Never/IfNotPresent` for locally built images).
+  - [x] Apply the manifests: `kubectl apply -f kubernetes/backend-deployment.yaml -f kubernetes/backend-service.yaml -f kubernetes/frontend-deployment.yaml -f kubernetes/frontend-service.yaml`.
+  - [x] Verify pods are running: `kubectl get pods`.
+  - [x] Verify services are created: `kubectl get svc`.
+  - [x] Access the frontend service from the host browser via its NodePort or LoadBalancer IP/port.
+- [x] Task 5: Implement Frontend to Backend `/health` Call (AC: #6, #7)
+  - [x] In the frontend application (e.g., `frontend/app/(dashboard)/page.tsx` or a dedicated component):
+    - [x] Add logic (e.g., in a `useEffect` hook) to call the backend's `/health` endpoint.
+    - [x] Ensure the `NEXT_PUBLIC_API_URL` in the frontend correctly points to the backend's k8s service name (e.g., `http://mailchimp-trends-backend-svc:8000/api/v1`). Note: The `/health` endpoint is typically at the root of the API service, not under `/api/v1` if `/api/v1` is a router prefix. Adjust URL accordingly (e.g. `http://localhost:<backend-nodeport>/health`).
+    - [x] Store the response (or error) in component state.
+    - [x] Display the status (e.g., "Backend Status: Healthy - Version 0.1.0") or an error message on the page.
+- [x] Task 6: Update Root Makefile (Optional)
+  - [x] Add targets to the root `Makefile` like `make deploy-k8s` (applies all manifests) and `make undeploy-k8s` (deletes all manifests).
+- [x] Make the deployments robust - Do not bake in port numbers into the frontend/backend images - come up with an alternative (for now, simply fixing the NodePort for the backend is sufficient)
 
 ## Dev Technical Guidance
 
@@ -70,10 +71,11 @@
 
 ## Story Progress Notes
 
-### Completion Notes List
+Will need to revisit the issue of connecting the frontend to the backend for scalability later.
 
-{Any notes about implementation choices, difficulties, or follow-up needed}
+### Completion Notes List
 
 ### Change Log
 
 - 2025-05-17 - Kayvan Sylvan - Initial draft
+- 2025-05-19 - Kayvan Sylvan - Complete.

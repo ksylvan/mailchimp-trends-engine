@@ -26,7 +26,7 @@
 - [ ] Task 1: Setup NLP Library and Module (AC: #1, #3)
   - [ ] Add chosen NLP library (e.g., `spacy`) to `backend/pyproject.toml` and update environment using `uv sync`.
   - [ ] Download necessary language models for spaCy (e.g., `python -m spacy download en_core_web_sm`). Document this step in `backend/README.md` or a setup script.
-  - [ ] Create `backend/src/mailchimp_trends/nlp_processing/preprocessing_service.py`.
+  - [ ] Create `backend/app//nlp_processing/preprocessing_service.py`.
 - [ ] Task 2: Implement Text Cleaning Function (AC: #2a)
   - [ ] In `preprocessing_service.py`, create `def clean_text(raw_text: str) -> str:`.
   - [ ] Implement logic to:

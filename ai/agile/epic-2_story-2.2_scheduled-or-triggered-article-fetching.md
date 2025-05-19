@@ -21,7 +21,7 @@
 
 - [ ] Task 1: Integrate Scheduling Library (AC: #1)
   - [ ] Add `APScheduler` (or a similar lightweight scheduling library like `schedule`) to `backend/pyproject.toml` dependencies and update the environment using `uv sync`.
-  - [ ] In `backend/src/mailchimp_trends/main.py` or a dedicated scheduling module (e.g., `data_ingestion/scheduler.py`):
+  - [ ] In `backend/app//main.py` or a dedicated scheduling module (e.g., `data_ingestion/scheduler.py`):
     - [ ] Initialize the scheduler instance when the FastAPI application starts.
     - [ ] Ensure the scheduler shuts down gracefully when the FastAPI application stops.
 - [ ] Task 2: Define the Article Fetching Job (AC: #2, #3, #6)

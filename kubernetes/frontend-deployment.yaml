@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mailchimp-trends-frontend
+  labels:
+    app: mailchimp-trends-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mailchimp-trends-frontend
+  template:
+    metadata:
+      labels:
+        app: mailchimp-trends-frontend
+    spec:
+      containers:
+      - name: mailchimp-trends-frontend
+        image: mailchimp-trends-frontend:latest # Assuming image is built locally and tagged as 'latest'
+        imagePullPolicy: IfNotPresent # Use locally available image
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PORT # Next.js typically uses PORT for its server
+          value: "3000"
+        - name: NEXT_PUBLIC_API_URL # For frontend to call backend
+          value: "http://mailchimp-trends-backend-svc:8000" # Using k8s service name, assuming /health is at root
+        # Add other necessary environment variables here
+        # Optional: Define resource requests and limits
+        # resources:
+        #   requests:
+        #     memory: "1Gi"
+        #     cpu: "0.5"
+        #   limits:
+        #     memory: "2Gi"
+        #     cpu: "1"

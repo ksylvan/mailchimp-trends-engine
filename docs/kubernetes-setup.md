@@ -40,7 +40,9 @@ This guide provides detailed instructions for setting up and managing the Kubern
 
 ## Managing Kubernetes Context
 
-After starting Colima, it automatically sets up a Kubernetes context. You can manage it with:
+After starting Colima with the `--kubernetes` flag, it automatically configures `kubectl` to use the new `colima` context. This means your `kubectl` commands will target the k3s cluster running within Colima.
+
+You can manage and verify your Kubernetes contexts with the following commands:
 
 ```bash
 # View available contexts
@@ -114,7 +116,7 @@ If you encounter issues:
 
 ```bash
 colima delete
-colima start --kubernetes
+colima start --kubernetes # Or with your preferred CPU/memory settings
 ```
 
 ### Check Colima Status
@@ -131,10 +133,17 @@ colima logs
 
 ### Common Fixes
 
-- If Docker commands fail: `colima start`
-- If kubectl commands fail: `colima start --kubernetes`
-- If contexts are mixed up: `kubectl config use-context colima`
-- If pods are stuck in "Pending" state: Check resources with `kubectl describe pod <pod-name>`
+- If Docker commands fail: Ensure Colima is running with `colima status` and start it if needed (`colima start`).
+- If `kubectl` commands fail or don't see the `colima` context: Ensure Colima was started with `--kubernetes` (`colima stop && colima start --kubernetes`). Verify context with `kubectl config current-context`.
+- If contexts are mixed up: Explicitly switch using `kubectl config use-context colima`.
+- If pods are stuck in "Pending" state: Check resource requests/limits and node resources. Use `kubectl describe pod <pod-name>` for details.
+- If pods have `ImagePullBackOff` or `ErrImagePull` status for locally built images:
+  - Ensure your Kubernetes Deployment YAML specifies `imagePullPolicy: IfNotPresent` or `imagePullPolicy: Never`.
+  - Verify the Docker image tag in your manifest matches the tag of the locally built image.
+  - Ensure k3s can access the Docker daemon's images (Colima usually handles this by sharing the Docker socket).
+- If services are not accessible from the host:
+  - Verify the Service type (e.g., `NodePort`, `LoadBalancer`). For `NodePort`, find the port using `kubectl get svc <service-name>`.
+  - Check if `kubectl port-forward service/<service-name> <local-port>:<service-port>` works for temporary access and diagnostics.
 
 ## Best Practices
 

@@ -31,7 +31,7 @@
   - [ ] Add `transformers` and `torch` (or `tensorflow` if model requires it) to `backend/pyproject.toml` and update environment using `uv sync`.
   - [ ] Ensure any necessary model files are downloaded during first use or as part of setup (Hugging Face libraries usually handle this automatically by caching to `~/.cache/huggingface/`).
 - [ ] Task 3: Implement Topic Extraction Service (AC: #3, #4, #7)
-  - [ ] Create `backend/src/mailchimp_trends/nlp_processing/topic_model_service.py`.
+  - [ ] Create `backend/app//nlp_processing/topic_model_service.py`.
   - [ ] Initialize the Hugging Face pipeline for the chosen task (e.g., `pipeline("zero-shot-classification", model="chosen_model_name")`).
     - [ ] Consider loading the pipeline once (e.g., as a global variable or in a class constructor) for efficiency if the service is called frequently.
   - [ ] Implement `async def extract_topics(cleaned_text_or_tokens: Union[str, List[str]]) -> List[str]:`.
@@ -41,16 +41,16 @@
     - [ ] Process the model's output to get the top N topics/labels with the highest scores.
     - [ ] Return a list of topic strings. Handle cases where no topics are confidently identified by returning an empty list.
 - [ ] Task 4: Integrate Topic Storage into Data Processing Flow (AC: #5)
-  - [ ] Create/Update `ProcessedArticleDataModel` in `backend/src/mailchimp_trends/db/models_db.py` to ensure it has a `topics = Column(JSON, nullable=True)` field.
+  - [ ] Create/Update `ProcessedArticleDataModel` in `backend/app//db/models_db.py` to ensure it has a `topics = Column(JSON, nullable=True)` field.
 
         ```python
-        # backend/src/mailchimp_trends/db/models_db.py
+        # backend/app//db/models_db.py
         # class ProcessedArticleDataModel(Base):
         #    # ... other fields
         #    topics = Column(JSON, nullable=True) # Stores List[str]
         ```
 
-  - [ ] Create a new service, e.g., `backend/src/mailchimp_trends/nlp_processing/nlp_service.py`, that orchestrates preprocessing, topic extraction, and (later) sentiment analysis.
+  - [ ] Create a new service, e.g., `backend/app//nlp_processing/nlp_service.py`, that orchestrates preprocessing, topic extraction, and (later) sentiment analysis.
   - [ ] This `nlp_service` will have a method like `async def process_article(db: AsyncSession, raw_article: RawArticleModel) -> ProcessedArticleDataModel:`.
     - [ ] Call `preprocessing_service.get_clean_tokens(raw_article.content_text)`.
     - [ ] Call `topic_model_service.extract_topics(cleaned_tokens_or_text)`.

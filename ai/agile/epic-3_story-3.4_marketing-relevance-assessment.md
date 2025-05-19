@@ -21,22 +21,22 @@
 ## Tasks / Subtasks
 
 - [ ] Task 1: Define Marketing Keyword List/Ontology (AC: #1)
-  - [ ] In `backend/src/mailchimp_trends/core/config.py` (or a new `marketing_ontology.py` or JSON file loaded by config):
+  - [ ] In `backend/app//core/config.py` (or a new `marketing_ontology.py` or JSON file loaded by config):
     - [ ] Define `MARKETING_KEYWORD_ONTOLOGY: List[str]` (or a more complex structure if doing more than keyword matching, e.g., Dict[str, List[str]] for categories). For MVP, a list of keywords/phrases is sufficient.
     - [ ] Populate with initial marketing-related terms (e.g., "content marketing", "seo", "social media advertising", "email campaign", "brand strategy", "influencer marketing", "customer engagement", "digital analytics", "conversion rate optimization").
   - [ ] Ensure this list is accessible via `core.config.settings`.
 - [ ] Task 2: Implement Marketing Relevance Assessment Service (AC: #2, #3, #4)
-  - [ ] Create `backend/src/mailchimp_trends/nlp_processing/relevance_assessment_service.py`.
+  - [ ] Create `backend/app//nlp_processing/relevance_assessment_service.py`.
   - [ ] Implement `def assess_marketing_relevance(topics: List[str], marketing_keywords: List[str]) -> Dict[str, bool]:` (or returns a list of relevant topics, or a dict with scores).
     - [ ] For each topic in the input `topics` list:
       - [ ] Check if the topic (or its sub-phrases/keywords) matches any term in the `marketing_keywords` list.
       - [ ] Matching can be simple exact string matching (case-insensitive) or more flexible (e.g., checking if a keyword is a substring of a topic, or vice-versa). For MVP, case-insensitive substring matching is a good start.
     - [ ] Return a dictionary where keys are input topics and values are booleans indicating relevance (or a list of only relevant topics).
 - [ ] Task 3: Integrate Relevance Storage into Data Processing Flow (AC: #5, #6)
-  - [ ] Update `ProcessedArticleDataModel` in `backend/src/mailchimp_trends/db/models_db.py` to include `marketing_keywords_matched = Column(JSON, nullable=True)` (to store a list of matched keywords or relevant topics).
+  - [ ] Update `ProcessedArticleDataModel` in `backend/app//db/models_db.py` to include `marketing_keywords_matched = Column(JSON, nullable=True)` (to store a list of matched keywords or relevant topics).
 
         ```python
-        # backend/src/mailchimp_trends/db/models_db.py
+        # backend/app//db/models_db.py
         # class ProcessedArticleDataModel(Base):
         #    # ... other fields
         #    marketing_keywords_matched = Column(JSON, nullable=True) # Stores List[str] of matched keywords or relevant topics

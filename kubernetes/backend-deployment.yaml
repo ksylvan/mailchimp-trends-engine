@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mailchimp-trends-backend
+  labels:
+    app: mailchimp-trends-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mailchimp-trends-backend
+  template:
+    metadata:
+      labels:
+        app: mailchimp-trends-backend
+    spec:
+      containers:
+      - name: mailchimp-trends-backend
+        image: mailchimp-trends-backend:latest # Assuming image is built locally and tagged as 'latest'
+        imagePullPolicy: IfNotPresent # Use locally available image
+        ports:
+        - containerPort: 8000
+        env:
+        - name: PORT
+          value: "8000"
+        # - name: BACKEND_VERSION # This could be set if the image/app supports it
+        #   value: "0.1.0" # Example, could be dynamic
+        # Add other necessary environment variables here
+        # For secrets like ANTHROPIC_API_KEY, use Kubernetes Secrets and envFrom or valueFrom
+        # Example for a secret:
+        # env:
+        # - name: ANTHROPIC_API_KEY
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: mailchimp-trends-secrets
+        #       key: ANTHROPIC_API_KEY
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        # Optional: Define resource requests and limits
+        # resources:
+        #   requests:
+        #     memory: "2Gi" # Example: 2 Gigabytes
+        #     cpu: "1"    # Example: 1 CPU core
+        #   limits:
+        #     memory: "4Gi"
+        #     cpu: "2"

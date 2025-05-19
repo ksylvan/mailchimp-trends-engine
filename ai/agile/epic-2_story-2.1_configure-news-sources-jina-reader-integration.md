@@ -24,13 +24,13 @@
 ## Tasks / Subtasks
 
 - [ ] Task 1: Configure News Sources (AC: #1)
-  - [ ] In `backend/src/mailchimp_trends/core/config.py` (or a new `settings.py`):
+  - [ ] In `backend/app//core/config.py` (or a new `settings.py`):
     - [ ] Define a Pydantic `Settings` model if not already present.
     - [ ] Add a configuration variable (e.g., `NEWS_SOURCES: List[str]`) to hold a list of 3-5 news URLs.
     - [ ] Load this list from environment variables or use a default list in the code. Example URLs: `https://www.bbc.com/news`, `https://www.reuters.com/world/`, `https://techcrunch.com/`.
   - [ ] Ensure `backend/.env.example` includes `NEWS_SOURCES='["url1","url2"]'`.
 - [ ] Task 2: Create Jina AI Reader Service Module (AC: #2)
-  - [ ] Create `backend/src/mailchimp_trends/data_ingestion/jina_ai_service.py`.
+  - [ ] Create `backend/app//data_ingestion/jina_ai_service.py`.
   - [ ] Define a class or functions to encapsulate Jina AI Reader interactions.
 - [ ] Task 3: Implement Jina AI Reader Fetch Function (AC: #3, #4, #7)
   - [ ] In `jina_ai_service.py`, create an `async` function `Workspace_article_content(url: str) -> str | None`.
@@ -68,7 +68,7 @@
 - **Configuration (`config.py`):**
 
     ```python
-    # backend/src/mailchimp_trends/core/config.py
+    # backend/app//core/config.py
     from pydantic_settings import BaseSettings, SettingsConfigDict
     from typing import List
 
