@@ -28,8 +28,15 @@ jobs:
         run: |
           git clone -b ${{ inputs.branch-name }} --no-checkout https://github.com/${{ github.repository }}.git temp_repo
           cd temp_repo
-          git restore --staged ${{ inputs.file-path }}
-          git checkout -f ${{ inputs.file-path }}
+          git status | grep -q ${{ inputs.file-path }}
+          if [ $? -ne 0 ]; then
+            echo "Warning: File ${{ inputs.file-path }} not found in branch ${{ inputs.branch-name }}."
+            echo '__version__ = "0.0.0"' > ${{ inputs.file-path }}
+            echo "Created a temporary file with version 0.0.0 for the next step."
+          else
+            git restore --staged ${{ inputs.file-path }}
+            git checkout -f ${{ inputs.file-path }}
+          fi
         shell: bash
 
       - name: Extract version from specified file
