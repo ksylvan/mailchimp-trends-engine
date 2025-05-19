@@ -32,9 +32,7 @@ jobs:
           version: latest
       - name: Install dependencies
         run: make bootstrap
-      - name: Run linters and formatters
-        run: make lint
-      - name: Run tests
+      - name: Run tests and linters
         run: make test
       - name: Run test coverage
         run: make coverage
@@ -54,42 +52,42 @@ jobs:
             echo "Source branch is 'develop'. Check passed."
           fi
 
-  # get_develop_version:
-  #   name: Get Develop Version
-  #   if: github.base_ref == 'develop' && github.event_name == 'pull_request'
-  #   uses: ./.github/workflows/get-version.yml
-  #   with:
-  #     branch-name: "develop"
-  #     file-path: "src/backend/src/mailchimp_trends_engine/__about__.py"
+  get_develop_version:
+    name: Get Develop Version
+    if: github.base_ref == 'develop' && github.event_name == 'pull_request'
+    uses: ./.github/workflows/get-version.yml
+    with:
+      branch-name: "develop"
+      file-path: "backend/app/__about__.py"
 
-  # get_current_version:
-  #   name: Get Current Version
-  #   if: github.base_ref == 'develop' && github.event_name == 'pull_request'
-  #   uses: ./.github/workflows/get-version.yml
-  #   with:
-  #     branch-name: "${{ github.head_ref }}"
-  #     file-path: "src/backend/src/mailchimp_trends_engine/__about__.py"
+  get_current_version:
+    name: Get Current Version
+    if: github.base_ref == 'develop' && github.event_name == 'pull_request'
+    uses: ./.github/workflows/get-version.yml
+    with:
+      branch-name: "${{ github.head_ref }}"
+      file-path: "backend/app/__about__.py"
 
-  # check_pr_version_bump:
-  #   name: Check PR Version Bump
-  #   needs: [get_develop_version, get_current_version]
-  #   runs-on: ubuntu-latest
-  #   # Only run this check for pull requests targeting the develop branch
-  #   if: github.base_ref == 'develop' && github.event_name == 'pull_request'
-  #   steps:
-  #     - name: Checkout code for version check
-  #       uses: actions/checkout@v4
-  #     - name: Check version bump
-  #       env:
-  #         GH_TOKEN: ${{ github.token }}
-  #       run: |
-  #         current_version="${{ needs.get_current_version.outputs.version }}"
-  #         previous_version="${{ needs.get_develop_version.outputs.version }}"
-  #         if [[ "$current_version" == "$previous_version" ]]; then
-  #           echo "Error: Version bump is required in the pull request. Version '$current_version' has not changed."
-  #           MESSAGE="Error: Version bump is required in the pull request. The current version is \`$current_version\`."
-  #           MESSAGE+=" Please ensure the version in \`src/backend/src/mailchimp_trends_engine/__about__.py\` is incremented in this PR."
-  #           gh pr review ${{ github.event.number }} --request-changes --body "$MESSAGE"
-  #         else
-  #           echo "Version bump detected. Check passed. Going from $previous_version to $current_version."
-  #         fi
+  check_pr_version_bump:
+    name: Check PR Version Bump
+    needs: [get_develop_version, get_current_version]
+    runs-on: ubuntu-latest
+    # Only run this check for pull requests targeting the develop branch
+    if: github.base_ref == 'develop' && github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code for version check
+        uses: actions/checkout@v4
+      - name: Check version bump
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          current_version="${{ needs.get_current_version.outputs.version }}"
+          previous_version="${{ needs.get_develop_version.outputs.version }}"
+          if [[ "$current_version" == "$previous_version" ]]; then
+            echo "Error: Version bump is required in the pull request. Version '$current_version' has not changed."
+            MESSAGE="Error: Version bump is required in the pull request. The current version is \`$current_version\`."
+            MESSAGE+=" Please ensure the version in \`backend/app/__about__.py\` is incremented in this PR."
+            gh pr review ${{ github.event.number }} --request-changes --body "$MESSAGE"
+          else
+            echo "Version bump detected. Check passed. Going from $previous_version to $current_version."
+          fi

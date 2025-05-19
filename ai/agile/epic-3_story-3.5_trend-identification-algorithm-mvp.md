@@ -80,4 +80,4 @@
 
 ### Change Log
 
-2025-05-17 - Kayvan Sylvan - {Description of Change, e.g., "Story Drafted"}
+- 2025-05-17 - Kayvan Sylvan - Initial draft

@@ -1,5 +1,15 @@
 # Mailchimp Marketing Trends Engine (MVP)
 
+[![License: MIT][mit_license]][mit_license_link]
+
+| main  |   |  | develop  |   |
+|:---:|:---:|:---:|:---:|:---:|
+| [![Main Tests][main_tests]][main_tests_link] | [![Main Publish][main_publish]][main_publish_link] |  | [![Develop Tests][develop_tests]][develop_tests_link] | [![Develop Publish][develop_publish]][develop_publish_link] |
+
+<div align="center">
+<img src="assets/mct_logo.jpeg" alt="cute snake hatching" width="250" height="250">
+</div>
+
 A real-time marketing trends analysis engine that scans web content to identify emerging marketing trends and generates AI-powered content suggestions for Mailchimp users. This system helps marketers stay ahead of trends and create timely, relevant marketing campaigns.
 
 ## Overview
@@ -210,4 +220,18 @@ For detailed information about the project, refer to:
 
 ## License
 
-[Include appropriate license information]
+Mailchimp Trends Engine is licensed under the [MIT License](./LICENSE).
+Copyright (c) 2025, [Kayvan Sylvan](mailto:kayvan@sylvan.com)
+
+[mit_license_link]: <https://opensource.org/licenses/MIT>
+[mit_license]: https://img.shields.io/badge/License-MIT-yellow.svg
+
+[develop_publish_link]: https://github.com/ksylvan/mailchimp-trends-engine/actions/workflows/publish.yml?branch=develop
+[develop_publish]: https://github.com/ksylvan/mailchimp-trends-engine/actions/workflows/publish.yml/badge.svg?branch=develop
+[develop_tests_link]: https://github.com/ksylvan/mailchimp-trends-engine/actions/workflows/tests.yml?branch=develop
+[develop_tests]: https://github.com/ksylvan/mailchimp-trends-engine/actions/workflows/tests.yml/badge.svg?branch=develop
+
+[main_publish_link]: https://github.com/ksylvan/mailchimp-trends-engine/actions/workflows/publish.yml
+[main_publish]: https://github.com/ksylvan/mailchimp-trends-engine/actions/workflows/publish.yml/badge.svg
+[main_tests_link]: https://github.com/ksylvan/mailchimp-trends-engine/actions/workflows/tests.yml
+[main_tests]: https://github.com/ksylvan/mailchimp-trends-engine/actions/workflows/tests.yml/badge.svg

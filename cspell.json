@@ -57,6 +57,7 @@
 		"pyright",
 		"pytest",
 		"RDBMS",
+		"redoc",
 		"sandboxed",
 		"Sched",
 		"sessionmaker",
