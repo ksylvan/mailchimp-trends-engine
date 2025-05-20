@@ -184,6 +184,6 @@ async def test_fetch_article_content_unexpected_error(
         timeout=DEFAULT_TIMEOUT,
     )
     assert (
-        f"An unexpected error occurred when fetching {mock_url} via Jina" in caplog.text
-    )
+        f"A truly unexpected error occurred when fetching {mock_url} via Jina."
+    ) in caplog.text
     assert "Something totally unexpected happened" in caplog.text
