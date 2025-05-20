@@ -1,4 +1,4 @@
-"""Mock test for server.main() function."""
+"""Unit tests for the server.main() function, mocking uvicorn."""
 
 from unittest import mock
 
