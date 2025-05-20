@@ -61,6 +61,7 @@
 		"pyproject",
 		"pyright",
 		"pytest",
+		"pytestmark",
 		"PYTHONDONTWRITEBYTECODE",
 		"PYTHONUNBUFFERED",
 		"RDBMS",

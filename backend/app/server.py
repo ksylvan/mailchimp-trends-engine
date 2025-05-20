@@ -8,6 +8,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .__about__ import __version__
+from .api.v1.routers import data_ingestion as data_ingestion_router
+from .data_ingestion.scheduler import shutdown_scheduler, start_scheduler
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -19,8 +21,10 @@ async def lifespan(current_app: FastAPI):
     """Ensure proper startup and shutdown of the application."""
     logger.info("Application startup. Version: %s", current_app.version)
     logger.info("API documentation available at /docs or /redoc")
+    await start_scheduler()
     yield
     # Shutdown
+    await shutdown_scheduler()
     logger.info("Application shutdown.")
 
 
@@ -44,6 +48,13 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
+)
+
+# Include API routers
+app.include_router(
+    data_ingestion_router.router,
+    prefix="/api/v1/data-ingestion",
+    tags=["Data Ingestion"],
 )
 
 

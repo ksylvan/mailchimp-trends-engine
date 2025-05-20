@@ -24,11 +24,12 @@ keywords = [
     "real-time analysis",
 ]
 dependencies = [
+    "apscheduler>=3.11.0",
     "fastapi>=0.115.12",
     "httpx>=0.28.1",
     "pydantic-settings>=2.9.1",
     "python-dotenv>=1.1.0",
-    "uvicorn>=0.34.2",
+    "uvicorn>=0.34.2", # Added APScheduler
 ]
 
 [project.urls]

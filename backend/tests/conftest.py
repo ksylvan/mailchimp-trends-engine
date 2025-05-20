@@ -31,8 +31,8 @@ def client() -> Iterator[TestClient]:
     The client is created once per test session and handles startup/shutdown.
     """
 
-    from backend.app import (  # pylint: disable=import-outside-toplevel
-        server as server_module,
+    from backend.app import (
+        server as server_module,  # pylint: disable=import-outside-toplevel
     )
 
     with TestClient(server_module.app) as test_client:

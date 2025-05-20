@@ -24,6 +24,9 @@ class Settings(BaseSettings):
         "https://www.marketingdive.com/",
     ]
 
+    # Delay between Jina AI Reader fetches to respect rate limits
+    JINA_FETCH_DELAY_SECONDS: int = 4
+
     # Example of another setting that might be needed later
     # ANTHROPIC_API_KEY: Optional[str] = None
 
