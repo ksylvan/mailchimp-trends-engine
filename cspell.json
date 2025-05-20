@@ -24,6 +24,7 @@
 		"asyncio",
 		"autoincrement",
 		"Boundaryless",
+		"caplog",
 		"cardiffnlp",
 		"chartjs",
 		"conftest",

@@ -31,17 +31,15 @@ bootstrap:
 	@echo "Frontend dependencies installed"
 
 test: lint
-	@echo "No tests configured yet. To run tests, first set up a testing framework."
 	pnpm test
 
 coverage:
-	@echo "Coverage reporting is not set up yet. To enable coverage:"
-	@echo "1. Install Jest or another testing framework"
-	@echo "2. Configure coverage thresholds in package.json"
-	@echo "3. Update the test script to include coverage reporting"
+	pnpm test:cov
 
 coverage-html:
-	@echo "HTML coverage reporting is not set up yet. See 'make coverage'."
+	@echo "To generate HTML coverage report, ensure your Jest config outputs 'html' reporter."
+	@echo "Typically, you can run 'pnpm test:cov' and check the coverage/lcov-report/index.html file."
+	pnpm test:cov # This will generate reports based on jest.config.js (text, lcov, etc.)
 
 lint:
 	pnpm lint
@@ -63,7 +61,7 @@ start:
 
 # Target to build the Docker image
 docker-build:
-	docker build -t mailchimp-trends-frontend:$(VERSION) -t mailchimp-trends-frontend:latest .
+	docker build --build-arg NEXT_PUBLIC_API_URL=http://localhost:30800 -t mailchimp-trends-frontend:$(VERSION) -t mailchimp-trends-frontend:latest .
 
 # Target to run the frontend application using Docker
 docker-run: docker-build
