@@ -8,6 +8,8 @@ ignore=.git,
       .venv,
       __pycache__
 
+init-hook='import sys; sys.path.insert(0, "."); sys.path.insert(0, "..")'
+
 [FORMAT]
 # Maximum number of characters on a single line.
 max-line-length=88

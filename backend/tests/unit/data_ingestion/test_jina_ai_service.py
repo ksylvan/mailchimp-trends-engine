@@ -169,7 +169,9 @@ async def test_fetch_article_content_unexpected_error(
     mock_encoded_url = urllib.parse.quote(mock_url, safe="")
     expected_jina_url = f"{JINA_READER_BASE_URL}{mock_encoded_url}"
 
-    unexpected_error = Exception("Something totally unexpected happened")
+    unexpected_error = ValueError(
+        "Something totally unexpected happened (ValueError)"
+    )  # Changed to ValueError
 
     mock_async_client = AsyncMock(spec=httpx.AsyncClient)
     mock_async_client.get = AsyncMock(side_effect=unexpected_error)
@@ -184,6 +186,9 @@ async def test_fetch_article_content_unexpected_error(
         timeout=DEFAULT_TIMEOUT,
     )
     assert (
-        f"A truly unexpected error occurred when fetching {mock_url} via Jina."
+        "An unexpected standard library error "
+        f"occurred when fetching {mock_url} via Jina: ValueError."
     ) in caplog.text
-    assert "Something totally unexpected happened" in caplog.text
+    assert (
+        "Something totally unexpected happened (ValueError)" in caplog.text
+    )  # Updated specific error message

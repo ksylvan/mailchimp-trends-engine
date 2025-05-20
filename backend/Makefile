@@ -55,7 +55,7 @@ coverage-html:
 
 lint:
 	uv run ruff check .
-	uv run pylint .
+	uv run pylint --fail-on=W0718 app tests
 
 format:
 	uv run ruff format .

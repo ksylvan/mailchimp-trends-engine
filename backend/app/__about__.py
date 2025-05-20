@@ -1,3 +1,3 @@
-"""Version info for mailchimp_trends_engine package."""
+"""Version info for Mailchimp Trends Engine app."""
 
-__version__ = "0.5.0"
+__version__ = "0.5.1"
