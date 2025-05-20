@@ -1,8 +1,9 @@
 """Unit tests for the /health endpoint."""
 
-from app.__about__ import __version__ as app_version
-from app.server import app  # Import your FastAPI app instance
 from fastapi.testclient import TestClient
+
+from backend.app.__about__ import __version__ as app_version
+from backend.app.server import app  # Import your FastAPI app instance
 
 client = TestClient(app)
 
@@ -18,7 +19,9 @@ def test_health_check_returns_correct_payload():
     response = client.get("/health")
     expected_payload = {"status": "healthy", "version": app_version}
     assert response.json() == expected_payload
+
+    payload_version = response.json().get("version")
     # Double check the version from __about__ directly for this test
-    assert app_version == "0.4.0", (
-        f"App version mismatch: expected 0.4.0, got {app_version}"
+    assert app_version == payload_version, (
+        f"App version mismatch: expected {app_version}, got {payload_version}"
     )

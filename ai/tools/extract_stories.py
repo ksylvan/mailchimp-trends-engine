@@ -6,13 +6,13 @@ them to individual files. It uses a specific format for the
 markdown content and requires an AUTHOR environment variable to be set.
 """
 
-import sys
+import logging
 import os
 import re
-import logging
-from pathlib import Path
+import sys
 from datetime import datetime
-from typing import TextIO, List, Optional
+from pathlib import Path
+from typing import TextIO
 
 from dotenv import load_dotenv
 
@@ -35,7 +35,7 @@ IGNORE_PATTERN = re.compile(r"^### Agent Model Used: .*$")
 
 def _write_story_file(
     filename: str,
-    content_lines: List[str],
+    content_lines: list[str],
     output_dir: Path,
     current_date: str,
     author: str,
@@ -68,7 +68,7 @@ def _write_story_file(
             out_f.write(markdown_content)
         logging.info("Successfully wrote %s to %s", filename, output_file)
         return True
-    except (IOError, PermissionError, OSError) as e:
+    except (PermissionError, OSError) as e:
         logging.error("Failed to write to %s: %s", output_file, e)
         return False
 
@@ -100,13 +100,13 @@ def extract_stories(input_file_path: str) -> int:
 
     stories_extracted_count = 0
     current_date = datetime.now().strftime("%Y-%m-%d")
-    current_story_filename: Optional[str] = None
-    current_story_content_lines: List[str] = []
+    current_story_filename: str | None = None
+    current_story_content_lines: list[str] = []
     current_state: str = STATE_LOOKING_FOR_FILENAME
 
     try:
         file_source: TextIO = (
-            sys.stdin if is_stdin else open(input_file_path, "r", encoding="utf-8")
+            sys.stdin if is_stdin else open(input_file_path, encoding="utf-8")
         )
 
         with file_source as f_input:
@@ -148,7 +148,7 @@ def extract_stories(input_file_path: str) -> int:
                     else:
                         current_story_content_lines.append(line)
 
-    except (IOError, PermissionError, UnicodeDecodeError) as e:
+    except (OSError, PermissionError, UnicodeDecodeError) as e:
         logging.error("Failed to read input: %s", e)
         return 0  # Indicates failure to process input
 
@@ -180,7 +180,8 @@ def main():
         )
     else:
         print(
-            "No stories were extracted or written. Check the log messages above for details."
+            "No stories were extracted or written. "
+            "Check the log messages above for details."
         )
         sys.exit(1)
 
