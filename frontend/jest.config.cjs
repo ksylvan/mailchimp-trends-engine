@@ -18,6 +18,18 @@ const customJestConfig = {
     // Handle module aliases (this will be automatically configured by nextJest)
     '^@/(.*)$': '<rootDir>/src/$1',
   },
+  // Configure coverage threshold enforcement
+  collectCoverage: false, // Only collect coverage when explicitly requested
+  coverageReporters: ['text', 'lcov', 'html'],
+  coverageDirectory: '<rootDir>/coverage',
+  coverageThreshold: {
+    global: { // This applies to all files together
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90
+    }
+  },
   // If you're using TypeScript with a baseUrl to set up directory aliases,
   // you need to configure moduleNameMapper to resolve those aliases.
   // Next.js automatically handles this for its own builds, but Jest needs it explicitly.

@@ -8,7 +8,10 @@ interface HealthResponse {
   version: string;
 }
 
-export default function Home() {
+// For testing - allows tests to force non-test environment behavior
+export const isTestEnv = () => process.env.NODE_ENV === 'test';
+
+export default function Home({ forceNonTestEnv = false }: { forceNonTestEnv?: boolean }) {
   const [backendStatus, setBackendStatus] = useState<string | null>(null);
   const [backendVersion, setBackendVersion] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -32,7 +35,7 @@ export default function Home() {
           );
         }
         const data = (await response.json()) as HealthResponse;
-        if (process.env.NODE_ENV === 'test') {
+        if (isTestEnv() && !forceNonTestEnv) {
           act(() => {
             setBackendStatus(data.status);
             setBackendVersion(data.version);
@@ -44,7 +47,7 @@ export default function Home() {
           setError(null);
         }
       } catch (err) {
-        if (process.env.NODE_ENV === 'test') {
+        if (isTestEnv() && !forceNonTestEnv) {
           act(() => {
             if (err instanceof Error) {
               setError(err.message);
@@ -67,7 +70,7 @@ export default function Home() {
     };
 
     fetchBackendStatus();
-  }, []);
+  }, [forceNonTestEnv]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">

@@ -157,4 +157,86 @@ describe('Home Page', () => {
       expect(screen.queryByText((content, element) => element?.tagName.toLowerCase() === 'p' && content.startsWith('Version:'))).not.toBeInTheDocument();
     });
   });
+
+  // Add tests for non-test environment paths to improve coverage using forceNonTestEnv prop
+  describe('Non-test environment paths (using forceNonTestEnv)', () => {
+    beforeEach(() => {
+      // Clear mock usage history before each test
+      (global.fetch as jest.Mock).mockClear();
+    });
+
+    test('displays backend status and version on successful fetch in non-test environment', async () => {
+      const mockStatus = 'healthy-prod';
+      const mockVersion = '0.1.0-prod';
+      // Promise for the response.json() call
+      const jsonPromise = Promise.resolve({ status: mockStatus, version: mockVersion });
+      // Promise for the fetch() call
+      const fetchPromise = Promise.resolve({
+        ok: true,
+        json: () => jsonPromise,
+      } as Response);
+
+      (global.fetch as jest.Mock).mockImplementationOnce(() => fetchPromise);
+
+      // Use the forceNonTestEnv prop instead of modifying NODE_ENV
+      render(<Home forceNonTestEnv={true} />);
+
+      // Wait for all promises to resolve and state updates to occur
+      await waitFor(() => {
+        // Use more specific selectors to target the right elements
+        const statusElement = screen.getByText((content, element) =>
+          element?.tagName.toLowerCase() === 'p' &&
+          element?.className.includes('text-green-600') &&
+          content.includes('Status:')
+        );
+        expect(statusElement.textContent).toContain(mockStatus);
+
+        const versionElement = screen.getByText((content, element) =>
+          element?.tagName.toLowerCase() === 'p' &&
+          element?.className.includes('text-blue-600') &&
+          content.includes('Version:')
+        );
+        expect(versionElement.textContent).toContain(mockVersion);
+
+        expect(screen.queryByText(/Loading backend status.../i)).not.toBeInTheDocument();
+      });
+
+      expect(global.fetch).toHaveBeenCalledTimes(1);
+      expect(global.fetch).toHaveBeenCalledWith(`${mockApiUrl}/health`);
+    });
+
+    test('displays error message on failed fetch in non-test environment', async () => {
+      // Mock a network error
+      (global.fetch as jest.Mock).mockImplementationOnce(() =>
+        Promise.reject(new Error('Network error in prod environment'))
+      );
+
+      // Use the forceNonTestEnv prop instead of modifying NODE_ENV
+      render(<Home forceNonTestEnv={true} />);
+
+      await waitFor(() => {
+        expect(screen.getByText(/Error connecting to backend: Network error in prod environment/i)).toBeInTheDocument();
+        // Check that status and version elements are not present - using more specific text patterns
+        expect(screen.queryByText('Status:')).not.toBeInTheDocument();
+        expect(screen.queryByText('Version:')).not.toBeInTheDocument();
+      });
+    });
+
+    test('displays unknown error message on non-Error rejection in non-test environment', async () => {
+      // Mock a rejection with a non-Error value
+      (global.fetch as jest.Mock).mockImplementationOnce(() =>
+        Promise.reject('A string error in prod environment')
+      );
+
+      // Use the forceNonTestEnv prop instead of modifying NODE_ENV
+      render(<Home forceNonTestEnv={true} />);
+
+      await waitFor(() => {
+        expect(screen.getByText(/Error connecting to backend: An unknown error occurred while fetching backend status./i)).toBeInTheDocument();
+        // Check that status and version elements are not present - using more specific text patterns
+        expect(screen.queryByText('Status:')).not.toBeInTheDocument();
+        expect(screen.queryByText('Version:')).not.toBeInTheDocument();
+      });
+    });
+  });
 });
