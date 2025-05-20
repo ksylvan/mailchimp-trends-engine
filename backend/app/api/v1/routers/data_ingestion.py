@@ -1,3 +1,5 @@
+"""Data Ingestion API Router"""
+
 import logging
 
 from fastapi import APIRouter, BackgroundTasks, HTTPException, status
