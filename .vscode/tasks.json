@@ -23,7 +23,7 @@
 			"type": "shell",
 			"label": "Run tests",
 			"command": "make test",
-			"problemMatcher": [],
+			"problemMatcher": ["$python"],
 			"detail": "Run tests using make",
 			"presentation": {
 				"reveal": "always",
@@ -35,8 +35,8 @@
 		{
 			"type": "shell",
 			"label": "Run tests with coverage",
-			"command": "make test-coverage",
-			"problemMatcher": ["$go"],
+			"command": "make coverage",
+			"problemMatcher": ["$python"],
 			"detail": "Run tests with coverage using make",
 			"presentation": {
 				"reveal": "always",

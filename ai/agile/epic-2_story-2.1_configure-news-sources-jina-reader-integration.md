@@ -1,6 +1,6 @@
 # Story 2.1: Configure News Sources & Basic Jina AI Reader Integration
 
-## Status: Draft
+## Status: Complete
 
 ## Story
 
@@ -97,3 +97,4 @@
 ### Change Log
 
 - 2025-05-17 - Kayvan Sylvan - Initial draft
+- 2025-05-19 - Kayvan Sylvan - Complete
