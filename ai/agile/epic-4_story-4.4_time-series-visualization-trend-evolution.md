@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Frontend Developer Agent
+- As a Frontend Developer
 - I want to integrate a charting library to display a time-series visualization of a selected trend's evolution (e.g., score or mention frequency over time) in the "Trend Details Panel"
 - so that users can visually understand the trajectory and significance of a trend, with the chart styled to align with Mailchimp's aesthetics.
 

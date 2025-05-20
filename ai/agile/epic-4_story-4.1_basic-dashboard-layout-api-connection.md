@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Frontend Developer Agent
+- As a Frontend Developer
 - I want to create the basic Next.js page structure for the main dashboard, implement its three-panel layout using Tailwind CSS, and establish an initial API connection to the backend's `/api/v1/trends` endpoint
 - so that the foundational UI for displaying trends is in place and can fetch initial trend data.
 

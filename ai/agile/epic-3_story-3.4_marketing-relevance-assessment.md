@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Backend Developer Agent
+- As a Backend Developer
 - I want to implement an initial pass for assessing the "marketing relevance" of extracted topics by matching them against a configurable marketing keyword list/ontology
 - so that the system can prioritize or flag topics that are more pertinent to marketers, and lay the groundwork for potential secondary focused searches (post-MVP).
 

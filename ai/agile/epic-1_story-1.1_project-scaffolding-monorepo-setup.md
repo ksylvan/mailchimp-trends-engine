@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Platform/DevOps Engineer (or a Developer Agent setting up the project)
+- As a Platform/DevOps Engineer (or a Developer setting up the project)
 - I want to establish the initial project scaffolding and monorepo structure
 - so that both frontend and backend development can begin in an organized, standardized, and manageable way.
 

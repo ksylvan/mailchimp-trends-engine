@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Frontend Developer Agent
+- As a Frontend Developer
 - I want to implement the UI in the "AI Content Generation Panel" for triggering content generation, displaying the LLM-generated ideas (email subjects, body copy, themes), and providing copy-to-clipboard functionality
 - so that users can easily interact with the AI content generation feature and utilize its outputs, with styling aligned to Mailchimp.
 

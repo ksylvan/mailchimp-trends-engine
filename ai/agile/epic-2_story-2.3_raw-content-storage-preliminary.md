@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Backend Developer Agent
+- As a Backend Developer
 - I want to implement a preliminary storage mechanism for the raw article text and basic metadata fetched by the Jina AI Reader service
 - so that this content is persisted and can be retrieved by the NLP processing module.
 

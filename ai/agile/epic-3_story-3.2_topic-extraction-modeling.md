@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Backend Developer Agent
+- As a Backend Developer
 - I want to integrate a pre-trained Hugging Face transformer model to perform topic extraction/modeling on the preprocessed article text
 - so that key themes and subjects discussed in the articles can be identified and stored for trend analysis.
 

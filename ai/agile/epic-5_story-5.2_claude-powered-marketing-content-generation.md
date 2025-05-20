@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Backend Developer Agent
+- As a Backend Developer
 - I want to implement the logic for generating relevant marketing content ideas (email subject lines, body copy, campaign themes) using the Claude LLM service based on a selected trend
 - so that the system can provide actionable AI-generated content to the user via an API endpoint.
 

@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Developer Agent (focused on Test Engineering/DevOps)
+- As a Developer (focused on Test Engineering/DevOps)
 - I want to set up testing frameworks for both backend and frontend, implement initial basic tests, and integrate these tests into the CI pipeline
 - so that automated testing is established early, ensuring code quality, and validating basic frontend-to-backend connectivity.
 

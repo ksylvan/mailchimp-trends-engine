@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Backend Developer Agent
+- As a Backend Developer
 - I want to implement an initial trend identification algorithm based on the frequency and basic growth rate of marketing-relevant topics
 - so that the system can identify and score potential marketing trends from the processed article data.
 

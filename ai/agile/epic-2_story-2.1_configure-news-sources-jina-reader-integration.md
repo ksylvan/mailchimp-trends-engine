@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Backend Developer Agent
+- As a Backend Developer
 - I want to configure a list of news sources and integrate the Jina AI Reader API (`r.jina.ai/URL`)
 - so that the system can fetch and extract primary textual content from these online news articles for subsequent processing.
 
@@ -16,48 +16,50 @@
 4. The function correctly parses the response from Jina AI Reader to extract the primary textual content (plain text or Markdown).
 5. Basic error handling is implemented for the Jina AI Reader API call (e.g., network errors, non-200 status codes), and errors are logged.
 6. A unit test is implemented for the Jina AI Reader interaction function, mocking the `httpx` call, to verify:
-    - [ ] Correct URL construction for Jina AI.
-    - [ ] Successful parsing of a mock Jina AI response.
-    - [ ] Proper error handling for a failed API call.
-7. The Jina API interaction respects rate limits noted in `architecture.md` (20 RPM for keyless access) – for this story, this means designing the function to be callable per URL without built-in aggressive looping; scheduling/batching is Story 2.2.
+    - [x] Correct URL construction for Jina AI.
+    - [x] Successful parsing of a mock Jina AI response.
+    - [x] Proper error handling for a failed API call.
+7. An integration test is also created, testing its actual functionality
+   - [x] We should be able to use the module to scrape one news site and have it work during the integration test. Use the canonical "example.com" for our test.
+8. The Jina API interaction respects rate limits noted in `architecture.md` (20 RPM for keyless access) – for this story, this means designing the function to be callable per URL without built-in aggressive looping; scheduling/batching is Story 2.2.
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Configure News Sources (AC: #1)
-  - [ ] In `backend/app//core/config.py` (or a new `settings.py`):
-    - [ ] Define a Pydantic `Settings` model if not already present.
-    - [ ] Add a configuration variable (e.g., `NEWS_SOURCES: List[str]`) to hold a list of 3-5 news URLs.
-    - [ ] Load this list from environment variables or use a default list in the code. Example URLs: `https://www.bbc.com/news`, `https://www.reuters.com/world/`, `https://techcrunch.com/`.
-  - [ ] Ensure `backend/.env.example` includes `NEWS_SOURCES='["url1","url2"]'`.
-- [ ] Task 2: Create Jina AI Reader Service Module (AC: #2)
-  - [ ] Create `backend/app//data_ingestion/jina_ai_service.py`.
-  - [ ] Define a class or functions to encapsulate Jina AI Reader interactions.
-- [ ] Task 3: Implement Jina AI Reader Fetch Function (AC: #3, #4, #7)
-  - [ ] In `jina_ai_service.py`, create an `async` function `Workspace_article_content(url: str) -> str | None`.
-  - [ ] Use `httpx.AsyncClient` to make a GET request to `https://r.jina.ai/{encoded_url}`.
-    - [ ] Ensure the target URL is URL-encoded before appending to Jina's base URL.
-    - [ ] Set appropriate headers (e.g., `Accept: text/plain` or `text/markdown`, `User-Agent`).
-  - [ ] If the request is successful (200 OK), return the response text.
-  - [ ] If not successful, return `None` or raise a custom exception (see Task 4).
-- [ ] Task 4: Implement Error Handling for Jina API Call (AC: #5)
-  - [ ] Wrap the `httpx` call in `Workspace_article_content` with `try-except` blocks.
-  - [ ] Catch `httpx.RequestError` (network issues, timeouts) and `httpx.HTTPStatusError` (non-200 responses).
-  - [ ] Log errors using Python's `logging` module (e.g., `logger.error(f"Failed to fetch from Jina for URL {url}: {e}")`).
-  - [ ] Consider a configurable timeout for the `httpx` request.
-- [ ] Task 5: Implement Unit Tests for Jina Service (AC: #6)
-  - [ ] Create `backend/tests/unit/data_ingestion/test_jina_ai_service.py`.
-  - [ ] Use `pytest` and `pytest-mock` (with `mocker` fixture).
-  - [ ] **Test Case 1 (Success):**
-    - [ ] Mock `httpx.AsyncClient.get`.
-    - [ ] Configure the mock to return a successful response with mock article text.
-    - [ ] Call `Workspace_article_content` and assert it returns the expected text.
-    - [ ] Assert the correct Jina URL was called with correct headers.
-  - [ ] **Test Case 2 (HTTP Error):**
-    - [ ] Configure the mock `httpx.AsyncClient.get` to raise an `httpx.HTTPStatusError` (e.g., 404 or 500).
-    - [ ] Call `Workspace_article_content` and assert it returns `None` (or handles the error as designed) and logs the error.
-  - [ ] **Test Case 3 (Request Error):**
-    - [ ] Configure the mock `httpx.AsyncClient.get` to raise an `httpx.RequestError`.
-    - [ ] Call `Workspace_article_content` and assert it returns `None` (or handles the error) and logs the error.
+- [x] Task 1: Configure News Sources (AC: #1)
+  - [x] In `backend/app//core/config.py` (or a new `settings.py`):
+    - [x] Define a Pydantic `Settings` model if not already present.
+    - [x] Add a configuration variable (e.g., `NEWS_SOURCES: List[str]`) to hold a list of 3-5 news URLs.
+    - [x] Load this list from environment variables or use a default list in the code. Example URLs: `https://www.bbc.com/news`, `https://www.reuters.com/world/`, `https://techcrunch.com/`.
+  - [x] Ensure `backend/.env.example` includes `NEWS_SOURCES='["url1","url2"]'`.
+- [x] Task 2: Create Jina AI Reader Service Module (AC: #2)
+  - [x] Create `backend/app//data_ingestion/jina_ai_service.py`.
+  - [x] Define a class or functions to encapsulate Jina AI Reader interactions.
+- [x] Task 3: Implement Jina AI Reader Fetch Function (AC: #3, #4, #7)
+  - [x] In `jina_ai_service.py`, create an `async` function `Workspace_article_content(url: str) -> str | None`.
+  - [x] Use `httpx.AsyncClient` to make a GET request to `https://r.jina.ai/{encoded_url}`.
+    - [x] Ensure the target URL is URL-encoded before appending to Jina's base URL.
+    - [x] Set appropriate headers (e.g., `Accept: text/plain` or `text/markdown`, `User-Agent`).
+  - [x] If the request is successful (200 OK), return the response text.
+  - [x] If not successful, return `None` or raise a custom exception (see Task 4).
+- [x] Task 4: Implement Error Handling for Jina API Call (AC: #5)
+  - [x] Wrap the `httpx` call in `Workspace_article_content` with `try-except` blocks.
+  - [x] Catch `httpx.RequestError` (network issues, timeouts) and `httpx.HTTPStatusError` (non-200 responses).
+  - [x] Log errors using Python's `logging` module (e.g., `logger.error(f"Failed to fetch from Jina for URL {url}: {e}")`).
+  - [x] Consider a configurable timeout for the `httpx` request.
+- [x] Task 5: Implement Unit Tests for Jina Service (AC: #6)
+  - [x] Create `backend/tests/unit/data_ingestion/test_jina_ai_service.py`.
+  - [x] Use `pytest` and `pytest-mock` (with `mocker` fixture).
+  - [x] **Test Case 1 (Success):**
+    - [x] Mock `httpx.AsyncClient.get`.
+    - [x] Configure the mock to return a successful response with mock article text.
+    - [x] Call `Workspace_article_content` and assert it returns the expected text.
+    - [x] Assert the correct Jina URL was called with correct headers.
+  - [x] **Test Case 2 (HTTP Error):**
+    - [x] Configure the mock `httpx.AsyncClient.get` to raise an `httpx.HTTPStatusError` (e.g., 404 or 500).
+    - [x] Call `Workspace_article_content` and assert it returns `None` (or handles the error as designed) and logs the error.
+  - [x] **Test Case 3 (Request Error):**
+    - [x] Configure the mock `httpx.AsyncClient.get` to raise an `httpx.RequestError`.
+    - [x] Call `Workspace_article_content` and assert it returns `None` (or handles the error) and logs the error.
 
 ## Dev Technical Guidance
 

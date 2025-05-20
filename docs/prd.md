@@ -96,7 +96,7 @@ The MVP of the Mailchimp Marketing Trends Engine will enable users to discover, 
     * **Rationale:** Backend as a single FastAPI application with clear internal modules (data ingestion, trend processing, API, LLM integration) for MVP simplicity, designed for future evolution to microservices. Frontend is a separate Next.js application.
 * **B. Technology Stack & Libraries:**
   * **Frontend:** TypeScript, Next.js, Tailwind CSS, shadcn/ui (or similar), `pnpm` for package management.
-  * **Backend (Python):** `uv` for env management, `src/mailchimp_trends/` layout, FastAPI, HTTPX. Jina AI Reader API (direct "r." calls, "s." calls with key for secondary search). Anthropic Claude API for LLM content generation (MVP), with a pluggable design for other LLMs.
+  * **Backend (Python):** `uv` for env management, `app/` layout, FastAPI, HTTPX. Jina AI Reader API (direct "r." calls, "s." calls with key for secondary search). Anthropic Claude API for LLM content generation (MVP), with a pluggable design for other LLMs.
   * **Containerization & Orchestration:** Docker, Colima with k3s locally, GitHub Actions with k3s for CI/CD.
 * **C. Testing Requirements:** Unit tests for backend modules and frontend components. CI/CD integration for automated builds and tests. Mock Data Source Plugin for testing.
 * **D. Development & Deployment:** MVP developed and demoed on Colima/k3s. Cloud-ready design.
@@ -117,7 +117,7 @@ The MVP of the Mailchimp Marketing Trends Engine will enable users to discover, 
 
     ```plaintext
     /── backend/
-    │   ├── src/mailchimp_trends/
+    │   ├── app/
     │   │   ├── main.py             # FastAPI app entry point
     │   │   ├── api/                # API routers/endpoints
     │   │   ├── core/               # Core logic, config, constants
@@ -166,7 +166,7 @@ The MVP of the Mailchimp Marketing Trends Engine will enable users to discover, 
   * **Story 1.1: Project Scaffolding & Monorepo Setup**
     * **ACs:** Git repo, `frontend`/`backend` dirs, README, .gitignore.
   * **Story 1.2: Backend "Majestic Monolith" (FastAPI) Application Setup**
-    * **ACs:** `uv`, `pyproject.toml`, `src/mailchimp_trends/`, FastAPI, `/health` endpoint, Dockerfile, runnable image.
+    * **ACs:** `uv`, `pyproject.toml`, `app/`, FastAPI, `/health` endpoint, Dockerfile, runnable image.
   * **Story 1.3: Frontend (Next.js) Application Setup with `pnpm`**
     * **ACs:** Next.js, TypeScript, `pnpm`, Tailwind CSS, basic page, Dockerfile, runnable image.
   * **Story 1.4: Local Orchestration & Initial Frontend-Backend Connectivity (Colima/k3s)**
