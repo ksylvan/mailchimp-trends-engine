@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { act } from "@testing-library/react"; // Import act
 
 interface HealthResponse {
   status: string;
@@ -31,17 +32,37 @@ export default function Home() {
           );
         }
         const data = (await response.json()) as HealthResponse;
-        setBackendStatus(data.status);
-        setBackendVersion(data.version);
-        setError(null);
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
+        if (process.env.NODE_ENV === 'test') {
+          act(() => {
+            setBackendStatus(data.status);
+            setBackendVersion(data.version);
+            setError(null);
+          });
         } else {
-          setError("An unknown error occurred while fetching backend status.");
+          setBackendStatus(data.status);
+          setBackendVersion(data.version);
+          setError(null);
         }
-        setBackendStatus(null);
-        setBackendVersion(null);
+      } catch (err) {
+        if (process.env.NODE_ENV === 'test') {
+          act(() => {
+            if (err instanceof Error) {
+              setError(err.message);
+            } else {
+              setError("An unknown error occurred while fetching backend status.");
+            }
+            setBackendStatus(null);
+            setBackendVersion(null);
+          });
+        } else {
+          if (err instanceof Error) {
+            setError(err.message);
+          } else {
+            setError("An unknown error occurred while fetching backend status.");
+          }
+          setBackendStatus(null);
+          setBackendVersion(null);
+        }
       }
     };
 

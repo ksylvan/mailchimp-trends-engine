@@ -1,5 +1,5 @@
 // frontend/src/app/__tests__/page.test.tsx
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor, act } from '@testing-library/react';
 import Home from '../page'; // Adjust the import path based on your actual file structure
 
 // Mock environment variable
@@ -45,22 +45,34 @@ describe('Home Page', () => {
   });
 
   test('displays backend status and version on successful fetch', async () => {
-    render(<Home />);
+    const mockStatus = 'healthy';
+    const mockVersion = '0.1.0-mock';
+    // Promise for the response.json() call
+    const jsonPromise = Promise.resolve({ status: mockStatus, version: mockVersion });
+    // Promise for the fetch() call
+    const fetchPromise = Promise.resolve({
+      ok: true,
+      json: () => jsonPromise, // The json() method returns our jsonPromise
+    } as Response);
 
-    // Wait for the status and version to be displayed
-    // We target the <p> elements and check their textContent
-    await screen.findByText(
-      (content, element) => element?.tagName.toLowerCase() === 'p' && content.startsWith('Status:'),
-      undefined,
-      { timeout: 3000 } // Optional: extend timeout if needed
-    );
+    (global.fetch as jest.Mock).mockImplementationOnce(() => fetchPromise);
 
-    const statusParagraph = screen.getByText((content, element) => element?.tagName.toLowerCase() === 'p' && content.startsWith('Status:'));
-    expect(statusParagraph).toHaveTextContent('Status: healthy');
+    await act(async () => {
+      render(<Home />);
+      // Wait for the main fetch promise to resolve
+      await fetchPromise;
+      // Wait for the .json() promise to resolve
+      await jsonPromise;
+      // All synchronous state updates after these promises should now be flushed by act
+    });
 
-    const versionParagraph = screen.getByText((content, element) => element?.tagName.toLowerCase() === 'p' && content.startsWith('Version:'));
-    expect(versionParagraph).toHaveTextContent('Version: 0.1.0-mock');
+    await waitFor(() => {
+      expect(screen.getByText((content, element) => element?.tagName.toLowerCase() === 'p' && content.startsWith('Status:'))).toHaveTextContent('Status: healthy');
+      expect(screen.getByText((content, element) => element?.tagName.toLowerCase() === 'p' && content.startsWith('Version:'))).toHaveTextContent('Version: 0.1.0-mock');
+      expect(screen.queryByText(/Loading backend status.../i)).not.toBeInTheDocument();
+    });
 
+    // Assertions for fetch calls can remain outside if they don't depend on further state changes.
     expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(global.fetch).toHaveBeenCalledWith(`${mockApiUrl}/health`);
   });
@@ -75,41 +87,74 @@ describe('Home Page', () => {
   });
 
   test('displays error message on failed fetch', async () => {
-    (global.fetch as jest.Mock).mockImplementationOnce(() =>
-      Promise.resolve({
+    let fetchPromise: Promise<Response>;
+    (global.fetch as jest.Mock).mockImplementationOnce(() => {
+      fetchPromise = Promise.resolve({
         ok: false,
         status: 500,
         statusText: 'Internal Server Error',
         json: () => Promise.resolve({}), // Should not be called if not ok
-      } as Response)
-    );
-    render(<Home />);
-    expect(
-      await screen.findByText(
-        /Error connecting to backend: Failed to fetch status: 500 Internal Server Error/i
-      )
-    ).toBeInTheDocument();
+      } as Response);
+      return fetchPromise;
+    });
+
+    await act(async () => {
+      render(<Home />);
+      await fetchPromise; // Ensure fetch promise resolves
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText(/Error connecting to backend: Failed to fetch status: 500 Internal Server Error/i)).toBeInTheDocument();
+      expect(screen.queryByText((content, element) => element?.tagName.toLowerCase() === 'p' && content.startsWith('Status:'))).not.toBeInTheDocument();
+      expect(screen.queryByText((content, element) => element?.tagName.toLowerCase() === 'p' && content.startsWith('Version:'))).not.toBeInTheDocument();
+    });
   });
 
   test('displays generic error message on network error', async () => {
-    (global.fetch as jest.Mock).mockImplementationOnce(() =>
-      Promise.reject(new Error('Network failed'))
-    );
-    render(<Home />);
-    expect(
-      await screen.findByText(/Error connecting to backend: Network failed/i)
-    ).toBeInTheDocument();
+    let fetchPromise: Promise<unknown>;
+    (global.fetch as jest.Mock).mockImplementationOnce(() => {
+      fetchPromise = Promise.reject(new Error('Network failed'));
+      return fetchPromise;
+    });
+
+    await act(async () => {
+      render(<Home />);
+      try {
+        await fetchPromise; // Ensure fetch promise rejects
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (_e) {
+        // Expected rejection, do nothing
+      }
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText(/Error connecting to backend: Network failed/i)).toBeInTheDocument();
+      expect(screen.queryByText((content, element) => element?.tagName.toLowerCase() === 'p' && content.startsWith('Status:'))).not.toBeInTheDocument();
+      expect(screen.queryByText((content, element) => element?.tagName.toLowerCase() === 'p' && content.startsWith('Version:'))).not.toBeInTheDocument();
+    });
   });
 
   test('displays unknown error message on non-Error rejection', async () => {
-    (global.fetch as jest.Mock).mockImplementationOnce(() =>
-      Promise.reject('A string error, not an Error object')
-    );
-    render(<Home />);
-    expect(
-      await screen.findByText(
-        /Error connecting to backend: An unknown error occurred while fetching backend status./i
-      )
-    ).toBeInTheDocument();
+    let fetchPromise: Promise<unknown>;
+    (global.fetch as jest.Mock).mockImplementationOnce(() => {
+      fetchPromise = Promise.reject('A string error, not an Error object');
+      return fetchPromise;
+    });
+
+    await act(async () => {
+      render(<Home />);
+      try {
+        await fetchPromise; // Ensure fetch promise rejects
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (_e) {
+        // Expected rejection, do nothing
+      }
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText(/Error connecting to backend: An unknown error occurred while fetching backend status./i)).toBeInTheDocument();
+      expect(screen.queryByText((content, element) => element?.tagName.toLowerCase() === 'p' && content.startsWith('Status:'))).not.toBeInTheDocument();
+      expect(screen.queryByText((content, element) => element?.tagName.toLowerCase() === 'p' && content.startsWith('Version:'))).not.toBeInTheDocument();
+    });
   });
 });

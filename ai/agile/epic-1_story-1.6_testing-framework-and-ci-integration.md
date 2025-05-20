@@ -87,6 +87,7 @@
 - Backend tests restructured and passing (1 xfailed for log capture). Coverage 100%.
 - Frontend tests implemented for `page.tsx` and passing. Coverage for `page.tsx` 100%.
 - CI pipeline integration confirmed via Makefile updates.
+- We are shooting for 90% coverage for both backend and frontend code, as of this story's completion, we are at 100% on the backend and almost 80% for the frontend.
 
 ### Change Log
 
