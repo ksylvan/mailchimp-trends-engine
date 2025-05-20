@@ -42,6 +42,9 @@ ENV PATH="/home/appuser/.venv/bin:$PATH"
 # and dev-mode-dirs = ["app"]
 # This means our application code is in the 'app' directory.
 COPY app/ ./app
+# Create a 'backend' directory and add an '__init__.py' file to make it a Python package.
+# Create a symlink from '/home/appuser/app' to './backend/app' to ensure compatibility
+# with certain Python import paths or tools that expect the application code in 'backend/app'.
 RUN mkdir ./backend && touch ./backend/__init__.py && ln -s /home/appuser/app ./backend/app
 # Switch to non-root user
 USER appuser
