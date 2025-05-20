@@ -27,6 +27,15 @@ class Settings(BaseSettings):
     # Delay between Jina AI Reader fetches to respect rate limits
     JINA_FETCH_DELAY_SECONDS: float = 4.0
 
+    SCHEDULER_PROCESSING_DELAY_SECONDS: float = 0.1
+
+    CORS_ORIGINS: list[str] = [
+        "http://localhost",  # General localhost for flexibility if needed
+        "http://localhost:3000",  # Common local dev port for frontend
+        "http://localhost:30900",  # Current Frontend NodePort
+        "https://your-production-domain.com",
+    ]
+
     # Example of another setting that might be needed later
     # ANTHROPIC_API_KEY: Optional[str] = None
 

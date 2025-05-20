@@ -22,8 +22,6 @@ logger = logging.getLogger(__name__)
 
 scheduler = AsyncIOScheduler()
 
-PROCESSING_DELAY_SECONDS = 0.1
-
 
 # Placeholder for actual content processing/storage (Story 2.3)
 async def process_fetched_content(url: str, content: str):
@@ -32,7 +30,9 @@ async def process_fetched_content(url: str, content: str):
         "Placeholder: Processing content from %s. Length: %s", url, len(content)
     )
     # In Story 2.3, this will involve saving to the database.
-    await asyncio.sleep(PROCESSING_DELAY_SECONDS)  # Simulate processing delay
+    await asyncio.sleep(
+        settings.SCHEDULER_PROCESSING_DELAY_SECONDS
+    )  # Simulate processing delay
 
 
 async def perform_scheduled_article_fetch():

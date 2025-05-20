@@ -7,9 +7,10 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .__about__ import __version__
-from .api.v1.routers import data_ingestion as data_ingestion_router
-from .data_ingestion.scheduler import shutdown_scheduler, start_scheduler
+from backend.app.__about__ import __version__
+from backend.app.api.v1.routers import data_ingestion as data_ingestion_router
+from backend.app.core.config import settings
+from backend.app.data_ingestion.scheduler import shutdown_scheduler, start_scheduler
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -34,13 +35,7 @@ app = FastAPI(version=__version__, lifespan=lifespan)
 # Allow requests from the frontend development server and deployed frontend (NodePort)
 # The NodePort for frontend is 30900, so localhost:30900
 # Allow frontend development server (e.g., localhost:3000)
-origins = [
-    # TODO: Make this configurable via a config file in the future.
-    "http://localhost",  # General localhost for flexibility if needed
-    "http://localhost:3000",  # Common local dev port for frontend
-    "http://localhost:30900",  # Current Frontend NodePort
-    # Add any other origins if necessary, e.g., deployed frontend URL post-MVP
-]
+origins = settings.CORS_ORIGINS
 
 app.add_middleware(
     CORSMiddleware,
