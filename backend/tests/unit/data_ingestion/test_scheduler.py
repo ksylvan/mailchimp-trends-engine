@@ -164,7 +164,6 @@ async def test_perform_scheduled_article_fetch_all_fail(
         await perform_scheduled_article_fetch()
 
     assert mock_fetch_article_content.call_count == 2
-    # caplog.set_level(logging.INFO) # Moved up
     assert "No content fetched for URL: http://example.com/news_fail1" in caplog.text
     assert "No content fetched for URL: http://example.com/news_fail2" in caplog.text
     assert (
