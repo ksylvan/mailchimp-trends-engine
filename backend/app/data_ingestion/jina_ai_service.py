@@ -63,10 +63,12 @@ async def fetch_article_content(url: str, client: httpx.AsyncClient) -> str | No
             e.request.url,
         )
         return None
-    except Exception:  # Catch any other unexpected exception
+    except (ValueError, TypeError) as e:  # Catch specific unexpected standard errors
         logger.exception(
-            "A truly unexpected error occurred when fetching %s via Jina. "
+            "An unexpected standard library error occurred "
+            "when fetching %s via Jina: %s. "
             "This indicates an issue beyond typical HTTP or network problems.",
             url,
+            e.__class__.__name__,
         )
         return None
