@@ -61,7 +61,7 @@ start:
 
 # Target to build the Docker image
 docker-build:
-	docker build -t mailchimp-trends-frontend:$(VERSION) -t mailchimp-trends-frontend:latest .
+	docker build --build-arg NEXT_PUBLIC_API_URL=http://localhost:30800 -t mailchimp-trends-frontend:$(VERSION) -t mailchimp-trends-frontend:latest .
 
 # Target to run the frontend application using Docker
 docker-run: docker-build

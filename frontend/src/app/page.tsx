@@ -1,17 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { act } from "@testing-library/react"; // Import act
 
 interface HealthResponse {
   status: string;
   version: string;
 }
 
-// For testing - allows tests to force non-test environment behavior
-export const isTestEnv = () => process.env.NODE_ENV === 'test';
-
-export default function Home({ forceNonTestEnv = false }: { forceNonTestEnv?: boolean }) {
+export default function Home() {
   const [backendStatus, setBackendStatus] = useState<string | null>(null);
   const [backendVersion, setBackendVersion] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -35,42 +31,22 @@ export default function Home({ forceNonTestEnv = false }: { forceNonTestEnv?: bo
           );
         }
         const data = (await response.json()) as HealthResponse;
-        if (isTestEnv() && !forceNonTestEnv) {
-          act(() => {
-            setBackendStatus(data.status);
-            setBackendVersion(data.version);
-            setError(null);
-          });
-        } else {
-          setBackendStatus(data.status);
-          setBackendVersion(data.version);
-          setError(null);
-        }
+        setBackendStatus(data.status);
+        setBackendVersion(data.version);
+        setError(null);
       } catch (err) {
-        if (isTestEnv() && !forceNonTestEnv) {
-          act(() => {
-            if (err instanceof Error) {
-              setError(err.message);
-            } else {
-              setError("An unknown error occurred while fetching backend status.");
-            }
-            setBackendStatus(null);
-            setBackendVersion(null);
-          });
+        if (err instanceof Error) {
+          setError(err.message);
         } else {
-          if (err instanceof Error) {
-            setError(err.message);
-          } else {
-            setError("An unknown error occurred while fetching backend status.");
-          }
-          setBackendStatus(null);
-          setBackendVersion(null);
+          setError("An unknown error occurred while fetching backend status.");
         }
+        setBackendStatus(null);
+        setBackendVersion(null);
       }
     };
 
     fetchBackendStatus();
-  }, [forceNonTestEnv]);
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
