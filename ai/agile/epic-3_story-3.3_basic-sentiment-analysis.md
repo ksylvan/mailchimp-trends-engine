@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Backend Developer Agent
+- As a Backend Developer
 - I want to integrate a pre-trained Hugging Face model to perform basic sentiment analysis (positive, negative, neutral) on preprocessed article text or topic snippets
 - so that the identified marketing trends can be enriched with sentiment information.
 

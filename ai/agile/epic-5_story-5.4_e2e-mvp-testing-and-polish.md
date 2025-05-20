@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a QA Engineer/Developer Agent
+- As a QA Engineer/Developer
 - I want to perform end-to-end testing of the complete MVP user flow, including Claude-powered content generation, and address any identified bugs or UI/UX polish items
 - so that the MVP is stable, performs acceptably for a demo, and provides a cohesive user experience.
 

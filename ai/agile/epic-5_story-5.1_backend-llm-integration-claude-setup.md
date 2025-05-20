@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Backend Developer Agent
+- As a Backend Developer
 - I want to design a generic Large Language Model (LLM) service interface within the backend and implement an initial concrete service for Anthropic Claude
 - so that the system can integrate with Claude for marketing content generation, while maintaining flexibility to support other LLM providers in the future.
 

@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Frontend Developer Agent
+- As a Frontend Developer
 - I want to implement the `TrendCard` component and use it to display each identified marketing trend with its key information (name, date, sentiment, score) within the "Trend Feed Panel"
 - so that users can quickly scan and identify relevant trends, with styling aligned to Mailchimp's aesthetics.
 

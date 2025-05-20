@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Backend Developer Agent
+- As a Backend Developer
 - I want to refine the Mock Data Ingestion Plugin
 - so that it provides realistic raw article text and metadata in a format consistent with the Jina AI Reader's output, making it a reliable data source for development, testing, and offline work.
 

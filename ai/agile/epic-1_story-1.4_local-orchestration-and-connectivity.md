@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Developer Agent
+- As a Developer
 - I want to set up local container orchestration using Colima/k3s and establish initial connectivity between the containerized frontend and backend applications
 - so that the full application stack can be run and tested locally in a Kubernetes-like environment, ensuring services can communicate as expected.
 

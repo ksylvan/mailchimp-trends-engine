@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Frontend Developer Agent
+- As a Frontend Developer
 - I want to implement basic filtering controls (by category, by sentiment) in the "Trend Feed Panel"
 - so that users can narrow down the list of displayed trends to find those most relevant to their interests, with filter controls styled like Mailchimp's.
 

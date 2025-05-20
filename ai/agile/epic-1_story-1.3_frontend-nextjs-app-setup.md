@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Frontend Developer Agent
+- As a Frontend Developer
 - I want to set up the foundational Next.js application structure for the frontend using `pnpm`
 - so that UI development, component creation, and API integration can proceed in an organized, type-safe, and efficient manner, aligning with the Mailchimp aesthetic.
 

@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Backend Developer Agent
+- As a Backend Developer
 - I want to implement a mechanism for periodically fetching new articles from the configured news sources using the Jina AI Reader service
 - so that the system continuously ingests fresh content for trend analysis.
 

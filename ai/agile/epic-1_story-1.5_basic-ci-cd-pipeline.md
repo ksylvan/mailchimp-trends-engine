@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a DevOps Engineer (or a Developer Agent responsible for CI/CD)
+- As a DevOps Engineer (or a Developer responsible for CI/CD)
 - I want to establish a basic CI/CD pipeline using GitHub Actions that automates building and linting for both frontend and backend applications
 - so that code quality is maintained, integration issues are caught early, and build artifacts (Docker images) are consistently produced.
 

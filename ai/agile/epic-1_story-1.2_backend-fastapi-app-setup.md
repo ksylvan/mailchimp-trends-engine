@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Backend Developer Agent
+- As a Backend Developer
 - I want to set up the foundational FastAPI application structure for the backend
 - so that core backend functionalities, API endpoints, and business logic can be developed in an organized, scalable, and maintainable manner, adhering to the "Majestic Monolith" pattern.
 

@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Backend Developer Agent
+- As a Backend Developer
 - I want to implement a basic NLP preprocessing pipeline for the raw textual content fetched from articles
 - so that the text is cleaned and standardized, preparing it for effective topic extraction and sentiment analysis.
 

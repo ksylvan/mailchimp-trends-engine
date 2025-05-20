@@ -4,7 +4,7 @@
 
 ## Story
 
-- As a Frontend Developer Agent
+- As a Frontend Developer
 - I want to implement comprehensive unit and integration tests for the main dashboard components (Trend Feed Panel, Trend Details Panel, Trend Card, Filter Controls, Chart Wrapper)
 - so that their individual functionality, interactions, and data handling are verified, ensuring a robust and reliable user interface.
 
