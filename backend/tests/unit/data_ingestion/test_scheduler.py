@@ -3,17 +3,23 @@
 import logging  # Added import
 from unittest.mock import ANY, AsyncMock, patch  # Added ANY
 
+import httpx
 import pytest
-from app.data_ingestion.scheduler import perform_scheduled_article_fetch
+
+from backend.app.data_ingestion.scheduler import perform_scheduled_article_fetch
 
 # Mark all tests in this file as asyncio
 pytestmark = pytest.mark.asyncio
 
 
-@patch("app.data_ingestion.scheduler.fetch_article_content", new_callable=AsyncMock)
-@patch("app.data_ingestion.scheduler.settings")
+@patch(
+    "backend.app.data_ingestion.scheduler.fetch_article_content", new_callable=AsyncMock
+)
+@patch("backend.app.data_ingestion.scheduler.settings")
 async def test_perform_scheduled_article_fetch_success(
-    mock_settings_patch, mock_fetch_article_content, caplog
+    mock_settings_patch: AsyncMock,
+    mock_fetch_article_content: AsyncMock,
+    caplog: pytest.LogCaptureFixture,
 ):
     """
     Tests successful execution of perform_scheduled_article_fetch.
@@ -28,9 +34,10 @@ async def test_perform_scheduled_article_fetch_success(
     # Configure mock_fetch_article_content to return different content
     # for different URLs
     async def side_effect_fetch(
-        url,
-        client=None,  # pylint: disable=unused-argument
-    ):  # Changed to client, added pylint disable
+        url: str,
+        client: httpx.AsyncClient | None = None,
+    ):
+        _ = client
         if url == "http://example.com/news1":
             return "Content from news1"
         if url == "http://example.com/news2":
@@ -40,7 +47,7 @@ async def test_perform_scheduled_article_fetch_success(
     mock_fetch_article_content.side_effect = side_effect_fetch
 
     with patch(
-        "app.data_ingestion.scheduler.asyncio.sleep", new_callable=AsyncMock
+        "backend.app.data_ingestion.scheduler.asyncio.sleep", new_callable=AsyncMock
     ) as mock_sleep:
         await perform_scheduled_article_fetch()
 
@@ -54,7 +61,6 @@ async def test_perform_scheduled_article_fetch_success(
     assert mock_sleep.call_count == 3
     mock_sleep.assert_any_call(0.1)
 
-    # caplog.set_level(logging.INFO) # Moved up
     assert "Starting scheduled article fetch cycle..." in caplog.text
     assert "Fetching content from URL: http://example.com/news1" in caplog.text
     assert (
@@ -81,10 +87,14 @@ async def test_perform_scheduled_article_fetch_success(
     )
 
 
-@patch("app.data_ingestion.scheduler.fetch_article_content", new_callable=AsyncMock)
-@patch("app.data_ingestion.scheduler.settings")
+@patch(
+    "backend.app.data_ingestion.scheduler.fetch_article_content", new_callable=AsyncMock
+)
+@patch("backend.app.data_ingestion.scheduler.settings")
 async def test_perform_scheduled_article_fetch_one_fails(
-    mock_settings_patch, mock_fetch_article_content, caplog
+    mock_settings_patch: AsyncMock,
+    mock_fetch_article_content: AsyncMock,
+    caplog: pytest.LogCaptureFixture,
 ):
     """
     Tests perform_scheduled_article_fetch when one article fetch fails.
@@ -97,9 +107,10 @@ async def test_perform_scheduled_article_fetch_one_fails(
     caplog.set_level(logging.INFO)
 
     async def side_effect_fetch(
-        url,
-        client=None,  # pylint: disable=unused-argument
-    ):  # Changed to client, added pylint disable
+        url: str,
+        client: httpx.AsyncClient | None = None,
+    ):
+        _ = client  # Added to avoid unused variable warning
         if url == "http://example.com/news1":
             return "Content from news1"
         if url == "http://example.com/news_fail":
@@ -112,7 +123,7 @@ async def test_perform_scheduled_article_fetch_one_fails(
     mock_fetch_article_content.side_effect = side_effect_fetch
 
     with patch(
-        "app.data_ingestion.scheduler.asyncio.sleep", new_callable=AsyncMock
+        "backend.app.data_ingestion.scheduler.asyncio.sleep", new_callable=AsyncMock
     ) as mock_sleep:
         await perform_scheduled_article_fetch()
 
@@ -127,10 +138,14 @@ async def test_perform_scheduled_article_fetch_one_fails(
     assert mock_sleep.call_count == 2
 
 
-@patch("app.data_ingestion.scheduler.fetch_article_content", new_callable=AsyncMock)
-@patch("app.data_ingestion.scheduler.settings")
+@patch(
+    "backend.app.data_ingestion.scheduler.fetch_article_content", new_callable=AsyncMock
+)
+@patch("backend.app.data_ingestion.scheduler.settings")
 async def test_perform_scheduled_article_fetch_all_fail(
-    mock_settings_patch, mock_fetch_article_content, caplog
+    mock_settings_patch: AsyncMock,
+    mock_fetch_article_content: AsyncMock,
+    caplog: pytest.LogCaptureFixture,
 ):
     """
     Tests perform_scheduled_article_fetch when all article fetches fail.
@@ -144,7 +159,7 @@ async def test_perform_scheduled_article_fetch_all_fail(
     caplog.set_level(logging.INFO)
 
     with patch(
-        "app.data_ingestion.scheduler.asyncio.sleep", new_callable=AsyncMock
+        "backend.app.data_ingestion.scheduler.asyncio.sleep", new_callable=AsyncMock
     ) as mock_sleep:
         await perform_scheduled_article_fetch()
 
@@ -159,10 +174,14 @@ async def test_perform_scheduled_article_fetch_all_fail(
     assert mock_sleep.call_count == 1
 
 
-@patch("app.data_ingestion.scheduler.fetch_article_content", new_callable=AsyncMock)
-@patch("app.data_ingestion.scheduler.settings")
+@patch(
+    "backend.app.data_ingestion.scheduler.fetch_article_content", new_callable=AsyncMock
+)
+@patch("backend.app.data_ingestion.scheduler.settings")
 async def test_perform_scheduled_article_fetch_exception_during_fetch(
-    mock_settings_patch, mock_fetch_article_content, caplog
+    mock_settings_patch: AsyncMock,
+    mock_fetch_article_content: AsyncMock,
+    caplog: pytest.LogCaptureFixture,
 ):
     """
     Tests perform_scheduled_article_fetch when an unhandled exception occurs
@@ -190,8 +209,10 @@ async def test_perform_scheduled_article_fetch_exception_during_fetch(
     )
 
 
-@patch("app.data_ingestion.scheduler.settings")
-async def test_perform_scheduled_article_fetch_no_sources(mock_settings_patch, caplog):
+@patch("backend.app.data_ingestion.scheduler.settings")
+async def test_perform_scheduled_article_fetch_no_sources(
+    mock_settings_patch: AsyncMock, caplog: pytest.LogCaptureFixture
+):
     """
     Tests perform_scheduled_article_fetch with an empty list of news sources.
     """
@@ -202,10 +223,11 @@ async def test_perform_scheduled_article_fetch_no_sources(mock_settings_patch, c
     # mock_fetch_article_content is not needed as it shouldn't be called
     with (
         patch(
-            "app.data_ingestion.scheduler.fetch_article_content", new_callable=AsyncMock
+            "backend.app.data_ingestion.scheduler.fetch_article_content",
+            new_callable=AsyncMock,
         ) as mock_fetch_no_call,
         patch(
-            "app.data_ingestion.scheduler.asyncio.sleep", new_callable=AsyncMock
+            "backend.app.data_ingestion.scheduler.asyncio.sleep", new_callable=AsyncMock
         ) as mock_sleep_no_call,
     ):
         await perform_scheduled_article_fetch()
