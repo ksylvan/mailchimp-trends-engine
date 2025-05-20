@@ -26,9 +26,6 @@ def test_lifespan_is_configured():
     assert app.router.lifespan_context is lifespan
 
 
-@pytest.mark.xfail(
-    reason="caplog does not reliably capture lifespan logs in this setup."
-)
 def test_lifespan_logs_startup_and_shutdown(
     caplog: pytest.LogCaptureFixture,
 ):  # Removed client fixture
@@ -39,7 +36,7 @@ def test_lifespan_logs_startup_and_shutdown(
     """
 
     # Get the logger instance used in app.server
-    app_server_logger = logging.getLogger("app.server")
+    app_server_logger = logging.getLogger("backend.app.server")
     # Ensure its level is INFO so messages pass through to handlers/caplog
     original_level = app_server_logger.level
     app_server_logger.setLevel(logging.INFO)
@@ -47,7 +44,7 @@ def test_lifespan_logs_startup_and_shutdown(
     caplog.clear()
 
     try:
-        with caplog.at_level(logging.INFO, logger="app.server"):
+        with caplog.at_level(logging.INFO, logger="backend.app.server"):
             with (
                 TestClient(app) as _local_client
             ):  # Indicate _local_client is not directly used after this
