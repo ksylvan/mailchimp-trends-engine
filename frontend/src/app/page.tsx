@@ -57,6 +57,9 @@ export default function Home() {
         <p className="mt-4 text-lg">
           The frontend application is running.
         </p>
+        <p className="mt-2 text-md text-gray-700">
+          Frontend Version: <span className="font-semibold">{process.env.NEXT_PUBLIC_APP_VERSION || "N/A"}</span>
+        </p>
         <div className="mt-8 p-6 border rounded-lg shadow-md bg-gray-50">
           <h2 className="text-2xl font-semibold mb-3">Backend Status:</h2>
           {error && (

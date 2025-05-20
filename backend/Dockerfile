@@ -23,6 +23,7 @@ COPY README.md ./
 # Copy the app directory as well, because hatch needs app/__about__.py to determine version during install
 COPY app/ ./app
 
+
 # Install dependencies using uv from the lock file
 # Using --frozen to ensure it uses uv.lock and doesn't update it
 # Not installing --dev dependencies for production image
@@ -41,7 +42,7 @@ ENV PATH="/home/appuser/.venv/bin:$PATH"
 # and dev-mode-dirs = ["app"]
 # This means our application code is in the 'app' directory.
 COPY app/ ./app
-
+RUN mkdir ./backend && touch ./backend/__init__.py && ln -s /home/appuser/app ./backend/app
 # Switch to non-root user
 USER appuser
 
