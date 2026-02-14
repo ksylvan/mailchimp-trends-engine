@@ -1,6 +1,6 @@
 # Story 1.5: Basic CI/CD Pipeline with Build & Linting (using `pnpm`)
 
-## Status: Draft
+## Status: Complete
 
 ## Story
 

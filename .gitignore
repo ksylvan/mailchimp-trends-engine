@@ -26,6 +26,8 @@ Temporary Items
 .scratch/
 .swp
 *.swp
+scratch/
+tmp/
 
 # local memory bank for context
 memory-bank/
