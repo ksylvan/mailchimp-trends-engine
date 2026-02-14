@@ -235,3 +235,4 @@ Copyright (c) 2025, [Kayvan Sylvan](mailto:kayvan@sylvan.com)
 [main_publish]: https://github.com/ksylvan/mailchimp-trends-engine/actions/workflows/publish.yml/badge.svg
 [main_tests_link]: https://github.com/ksylvan/mailchimp-trends-engine/actions/workflows/tests.yml
 [main_tests]: https://github.com/ksylvan/mailchimp-trends-engine/actions/workflows/tests.yml/badge.svg
+
