@@ -55,12 +55,12 @@ backend-%:
 	make -C backend $$target
 
 # Frontend specific commands
-frontend frontend-%:
+frontend:
+	@echo "Please specify a target for frontend (e.g., frontend-dev)"
+	@exit 1
+
+frontend-%:
 	@target=$$(echo $@ | sed 's/^frontend-//'); \
-	if [ "$$target" = "frontend" ]; then \
-		echo "Please specify a target for frontend (e.g., frontend-dev)"; \
-		exit 1; \
-	fi; \
 	echo "Running $$target for frontend..."; \
 	make -C frontend $$target
 
