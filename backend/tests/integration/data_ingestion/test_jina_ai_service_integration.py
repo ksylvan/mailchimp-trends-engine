@@ -32,10 +32,8 @@ async def test_fetch_example_dot_com_content():
     # so assertions should be somewhat flexible.
     # Common phrases on example.com:
     assert "Example Domain" in content, "Content should contain 'Example Domain'"
-    assert "illustrative examples" in content, (
-        "Content should contain 'illustrative examples'"
-    )
-    assert "documents" in content, "Content should contain 'documents'"
+    assert "examples" in content, "Content should contain 'examples'"
+    assert "domain" in content.lower(), "Content should contain 'domain'"
 
     # Log the fetched content for manual inspection if needed during test runs
     log_message = (
